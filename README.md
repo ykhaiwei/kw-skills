@@ -10,23 +10,25 @@ Requires Python 3.11+.
 ```sh
 git clone https://github.com/ykhaiwei/kw-skills.git
 cd kw-skills
-bin/link --apply
-bin/doctor --installed
+bin/setup --apply
+bin/doctor --installed --defaults
 ```
 
-Start a new Claude Code or Codex conversation. Keep the repo where you cloned it;
-the installed skills link back to it.
+Start a new Claude Code or Codex conversation. KW mode is now the default across
+projects. Keep the repo where you cloned it; the installation links back to it.
 
 ## Use
 
-Claude Code:
+Just describe the task:
 
 ```text
-/kw-mode fix this bug and verify it
-/kw-mode review this diff
-/kw-mode let's discuss the approach first
+fix this bug and verify it
+review this diff
+let's discuss the approach first
 ```
 
-In Codex, use `$kw-mode` instead.
+No command needed. `/kw-mode` in Claude Code and `$kw-mode` in Codex still work.
+Say "skip kw-mode for this task" to opt out.
 
 Edit [profile.md](skills/kw-mode/profile.md) to customize the defaults.
+Agents can start with [AGENTS.md](AGENTS.md) for setup and maintenance.

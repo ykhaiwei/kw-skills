@@ -1,151 +1,152 @@
 {
   "repository": "https://github.com/cursor/plugins",
   "commit": "27e2a62ff94f9af4b5e68435e41cdceacadb840c",
+  "pstack_version": "0.15.0",
   "retrieved": "2026-09-09",
   "files": [
     {
       "local": "skills/kw-mode/principles/attack-the-premise.md",
       "upstream": "pstack/skills/principle-attack-the-premise/SKILL.md",
       "upstream_sha256": "c87bd7536f772f8a403ad8155535ee17a1bbec9a353156693eb3bb1520c87ae3",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
     },
     {
       "local": "skills/kw-mode/principles/boundary-discipline.md",
       "upstream": "pstack/skills/principle-boundary-discipline/SKILL.md",
       "upstream_sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; localized links where present. Replaced unconditional internal trust with established invariants; mutable, cross-process, persisted, or untrusted inputs remain boundaries."
     },
     {
       "local": "skills/kw-mode/principles/build-the-lever.md",
       "upstream": "pstack/skills/principle-build-the-lever/SKILL.md",
       "upstream_sha256": "458b269eab8e95a1573276955312f7d2a13ae8599879a9efc748248f6bc34b56",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
     },
     {
       "local": "skills/kw-mode/principles/encode-lessons-in-structure.md",
       "upstream": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
       "upstream_sha256": "77044c83a9ac6df78fc643887ea5f1f11f082adaf14b717c060cdaed03cce863",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/exhaust-the-design-space.md",
       "upstream": "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
       "upstream_sha256": "8583310d7297b7823d75494faa57b003564d436807febecdecbd8321abe5cf6e",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/experience-first.md",
       "upstream": "pstack/skills/principle-experience-first/SKILL.md",
       "upstream_sha256": "58903529d733b1c1a7c9ccf127d45ef3c7d0d9f0b81164a4dc6b80efe6f2912b",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/fix-root-causes.md",
       "upstream": "pstack/skills/principle-fix-root-causes/SKILL.md",
       "upstream_sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/foundational-thinking.md",
       "upstream": "pstack/skills/principle-foundational-thinking/SKILL.md",
       "upstream_sha256": "864b827e8199d946ce58beca0f89c4ed4099ed6e426fb698a3aaa45de2a9eea2",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/guard-the-context-window.md",
       "upstream": "pstack/skills/principle-guard-the-context-window/SKILL.md",
       "upstream_sha256": "9f60e2c79b35f865cb103462f9128c6760b70f603475d1e535e5930f61840f66",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; localized links where present. Prefer targeted extraction before delegating large reads, and condition delegation on available runtime capabilities and permission."
     },
     {
       "local": "skills/kw-mode/principles/laziness-protocol.md",
       "upstream": "pstack/skills/principle-laziness-protocol/SKILL.md",
       "upstream_sha256": "9006579e9e3f33955d17569733db688ae65f22577dc3b21803d219a5a8445aff",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/make-operations-idempotent.md",
       "upstream": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
       "upstream_sha256": "540738217c3da7bf513b9886924ad6a2bc77e58be867f5bd2e1831c74bf2ce70",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/migrate-callers-then-delete-legacy-apis.md",
       "upstream": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
       "upstream_sha256": "09978915a4a11990cf0a9a02d9c08cc59e0b7a04c5c24b83aa560fbe4146f75b",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; localized links where present. Added an exception for supported external API compatibility; the immediate migration/deletion rule targets internal callers."
     },
     {
       "local": "skills/kw-mode/principles/minimize-reader-load.md",
       "upstream": "pstack/skills/principle-minimize-reader-load/SKILL.md",
       "upstream_sha256": "42551c5dc74cd578163c148da552db3ff67d29b78600ef216bfd311fb828fe69",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
     },
     {
       "local": "skills/kw-mode/principles/model-the-domain.md",
       "upstream": "pstack/skills/principle-model-the-domain/SKILL.md",
       "upstream_sha256": "bbadbb9a723fac3f76e782ae45665eb94058ec10993e4bae36d4dc6b0e4eac07",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/never-block-on-the-human.md",
       "upstream": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
       "upstream_sha256": "d82bce9ab9193249d1ec0d514202d89602f0fd3d312174d622c2dd222bae5a2e",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; localized links where present. Keep reversible work within the request, preserve discussion/plan-only scope, record unrelated findings, and reuse authorization already granted."
     },
     {
       "local": "skills/kw-mode/principles/outcome-oriented-execution.md",
       "upstream": "pstack/skills/principle-outcome-oriented-execution/SKILL.md",
       "upstream_sha256": "beedcaed75572a6a1662d47f16da203c2bd2c9dbffbbd678d4ba187d67b7e670",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/prove-it-works.md",
       "upstream": "pstack/skills/principle-prove-it-works/SKILL.md",
       "upstream_sha256": "ae13d287984a5864312b6286899d4ee2b60f8272b5e5e8fcc586a7c3ea51020b",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; localized links where present. Made committing evidence conditional on existing commit authorization and localized the decision-log workflow link."
     },
     {
       "local": "skills/kw-mode/principles/redesign-from-first-principles.md",
       "upstream": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
       "upstream_sha256": "a1c7fd0a96b40e12a74bceb0e6bb20a9666dd844dcabfb624acb27da23b929fe",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/separate-before-serializing-shared-state.md",
       "upstream": "pstack/skills/principle-separate-before-serializing-shared-state/SKILL.md",
       "upstream_sha256": "05294b40448e927c5da1c7b6f5c6b9fed3744637e3833d2d948b9154a9dd00bb",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/sequence-verifiable-units.md",
       "upstream": "pstack/skills/principle-sequence-verifiable-units/SKILL.md",
       "upstream_sha256": "761390804ee36c32f5338d8db47ec54463d40ff96dbb296dfafabcd5f2593eec",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
     },
     {
       "local": "skills/kw-mode/principles/subtract-before-you-add.md",
       "upstream": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
       "upstream_sha256": "a983a50e732c1ed315eba7aaf47a61329e31c4794eb1ab9d25d9945265b31e03",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/test-behavior-not-implementation.md",
       "upstream": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
       "upstream_sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; principle body unchanged."
     },
     {
       "local": "skills/kw-mode/principles/type-system-discipline.md",
       "upstream": "pstack/skills/principle-type-system-discipline/SKILL.md",
       "upstream_sha256": "c83da8031ffb4c86410030d3e261f659598fca2b7d8158fd9dc269d70a3a025e",
-      "adaptation": "Frontmatter removed; links localized; scope/runtime/compatibility clarified where needed."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
     },
     {
       "local": "skills/kw-mode/playbooks/authoring-a-skill.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
       "upstream_sha256": "f6a13a445c360b48d6cd72780ac01955f45b82826476efe0e67c7559329407aa",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "adaptation": "Uses host skill-authoring guidance; resolves validation tools from the hub root and documents separate local versus upstream provenance entries."
     },
     {
       "local": "skills/kw-mode/playbooks/autonomous-run.md",
@@ -169,13 +170,13 @@
       "local": "skills/kw-mode/playbooks/babysit.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/babysit.md",
       "upstream_sha256": "51be21872152f97612d37258273269b88212b6696432d25d678cac30f02f4157",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "adaptation": "Uses the current forge and native waiting; distinguishes check, drive, and threads-only scope; allows one fresh CI run for suspected flakes before investigating repeated failures."
     },
     {
       "local": "skills/kw-mode/playbooks/bug-fix.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
       "upstream_sha256": "e958c67d5454fc12d76ec645b50dfd85c423082aac13a49e2913ef2815948216",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "adaptation": "Uses local investigation and verification workflows, retains runtime instrumentation for unclear state, and makes delivery conditional on the requested scope."
     },
     {
       "local": "skills/kw-mode/playbooks/eval.md",
@@ -187,7 +188,7 @@
       "local": "skills/kw-mode/playbooks/feature.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/feature.md",
       "upstream_sha256": "430dae0fd736554ff7dffc3ef0644c9f0c845e25742f69e598c35b9b89660301",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "adaptation": "Uses local design and verification workflows; checks dependencies, independent workstreams, shared state, and decomposition before delegation; follows authorized repository delivery."
     },
     {
       "local": "skills/kw-mode/playbooks/hillclimb.md",
@@ -319,7 +320,7 @@
       "local": "skills/kw-mode/workflows/reflect.md",
       "upstream": "pstack/skills/reflect/SKILL.md",
       "upstream_sha256": "6a4d4ccaace9ce88c3e268fcbedf3cfd40e527162a5e5aad6de8edbaf5e2b83f",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "adaptation": "Uses scoped session evidence, separates observed preferences from inferences, edits within the request, and resolves maintenance tools from the hub root."
     },
     {
       "local": "skills/kw-mode/workflows/review.md",

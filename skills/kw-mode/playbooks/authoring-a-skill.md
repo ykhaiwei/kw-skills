@@ -11,4 +11,8 @@
    Use realistic behavior checks for material workflow changes, not tests that
    merely assert the instruction's wording.
 5. Review the diff with [writing](../workflows/writing.md), then complete requested
-   installation or delivery. For this hub, run `bin/doctor` and `bin/test`.
+   installation or delivery. For this hub, run `bin/doctor` and `bin/test` from the
+   hub root, resolved as described in [runtime](../runtime.md). Register an original
+   principle, playbook, or workflow in the hub's `upstream.json` with its `local`
+   relative path and `"origin": "local"`; omit upstream paths and hashes. Adapted
+   entries use `"origin": "upstream"`, the source path/hash, and accurate change notes.
