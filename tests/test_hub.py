@@ -1,8 +1,11 @@
 import contextlib
 import importlib.util
 import io
+import json
 from pathlib import Path
+import re
 import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -87,6 +90,168 @@ class HubTests(unittest.TestCase):
     def test_containment_rejects_escape(self):
         with self.assertRaises(ValueError):
             hub.inside(ROOT, "../outside")
+
+    def copy_repo(self):
+        repo = Path(self.tmp.name) / "repo"
+        shutil.copytree(
+            ROOT, repo, symlinks=True,
+            ignore=shutil.ignore_patterns("__pycache__", ".git", ".idea", "REVIEW.txt"),
+        )
+        return repo
+
+    def run_cli(self, repo, alias, *args):
+        return subprocess.run(
+            [str(repo / "bin" / alias), *args], cwd=repo,
+            text=True, capture_output=True,
+        )
+
+    def test_original_playbook_has_local_provenance(self):
+        repo = self.copy_repo()
+        playbook = "skills/kw-mode/playbooks/local-workflow.md"
+        (repo / playbook).write_text("# Local workflow\n\n1. Check local behavior.\n")
+        with (repo / "skills/kw-mode/SKILL.md").open("a") as stream:
+            stream.write("\n[Local workflow](playbooks/local-workflow.md)\n")
+        self.assertEqual(hub.doctor(repo), 1)
+        path = repo / "upstream.json"
+        data = json.loads(path.read_text())
+        data["files"].append({"local": playbook, "origin": "local"})
+        path.write_text(json.dumps(data))
+        self.assertEqual(hub.doctor(repo), 0)
+
+    def test_upstream_entries_still_require_source_hash(self):
+        repo = self.copy_repo()
+        path = repo / "upstream.json"
+        data = json.loads(path.read_text())
+        del data["files"][0]["upstream_sha256"]
+        path.write_text(json.dumps(data))
+        self.assertEqual(hub.doctor(repo), 1)
+
+    def test_local_provenance_rejects_upstream_fields_and_unknown_origins(self):
+        repo = self.copy_repo()
+        path = repo / "upstream.json"
+        data = json.loads(path.read_text())
+        for origin in ("local", "unknown"):
+            with self.subTest(origin=origin):
+                data["files"][0]["origin"] = origin
+                path.write_text(json.dumps(data))
+                self.assertEqual(hub.doctor(repo), 1)
+
+    def test_alias_install_and_uninstall_with_broken_content(self):
+        repo = self.copy_repo()
+        result = self.run_cli(repo, "link", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn("PASS", result.stdout)
+        (repo / "skills/kw-mode/workflows/verify.md").unlink()
+        result = self.run_cli(repo, "doctor")
+        self.assertEqual(result.returncode, 1)
+        (repo / "skills/kw-mode/SKILL.md").unlink()
+        result = self.run_cli(repo, "link", "--remove", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue((self.home / ".claude/skills/kw-mode").is_symlink())
+        result = self.run_cli(repo, "link", "--remove", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse((self.home / ".claude/skills/kw-mode").is_symlink())
+        self.assertFalse((self.home / ".agents/skills/kw-mode").is_symlink())
+        self.assertTrue((repo / "skills/kw-mode/profile.md").is_file())
+
+    def test_description_scalar_forms(self):
+        repo = self.copy_repo()
+        skill = repo / "skills/kw-mode/SKILL.md"
+        original = skill.read_text()
+        for description in ('x', '"A description"', '>\n  A folded description.', '>+\n  A folded description.', '>-\n  A folded description.', '|\n  A literal description.'):
+            with self.subTest(description=description):
+                skill.write_text(re.sub(r"^description: .+$", "description: " + description, original, flags=re.M))
+                self.assertEqual(hub.doctor(repo), 0)
+        for description in ('', '""', "''", '>\n  ', '|\n  '):
+            with self.subTest(empty_description=description):
+                skill.write_text(re.sub(r"^description: .+$", "description: " + description, original, flags=re.M))
+                self.assertEqual(hub.doctor(repo), 1)
+
+    def test_setup_preview_does_not_create_home(self):
+        repo = self.copy_repo()
+        result = self.run_cli(repo, "setup", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(str(repo.resolve() / "skills/kw-mode/SKILL.md"), result.stdout)
+        self.assertFalse(self.home.exists())
+
+    def test_setup_preserves_user_text_updates_and_removes_defaults(self):
+        repo = self.copy_repo()
+        paths = [self.home / ".claude/CLAUDE.md", self.home / ".codex/AGENTS.md"]
+        original = "# My instructions\r\nPreserve these preferences.\r\n".encode()
+        suffix = b"\n# Later note\nKeep this too.\n"
+        for path in paths:
+            path.parent.mkdir(parents=True)
+            path.write_bytes(original)
+        result = self.run_cli(repo, "setup", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        for path in paths:
+            data = path.read_bytes()
+            self.assertTrue(data.startswith(original))
+            self.assertIn(str(repo.resolve() / "skills/kw-mode/SKILL.md").encode(), data)
+            path.write_bytes(data + suffix)
+        installed = [path.read_bytes() for path in paths]
+        result = self.run_cli(repo, "setup", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual([path.read_bytes() for path in paths], installed)
+        result = self.run_cli(repo, "doctor", "--installed", "--defaults", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        with (repo / "instructions/default.md").open("a") as stream:
+            stream.write("\nNew default guidance.\n")
+        result = self.run_cli(repo, "doctor", "--defaults", "--home", str(self.home))
+        self.assertEqual(result.returncode, 1)
+        result = self.run_cli(repo, "setup", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        for path in paths:
+            self.assertIn(b"New default guidance.", path.read_bytes())
+            self.assertEqual(path.read_bytes().count(b"<!-- kw-mode:begin -->"), 1)
+        (repo / "instructions/default.md").unlink()
+        (repo / "skills/kw-mode/SKILL.md").unlink()
+        result = self.run_cli(repo, "setup", "--remove", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        for path in paths:
+            self.assertEqual(path.read_bytes(), original + suffix)
+        self.assertFalse((self.home / ".claude/skills/kw-mode").is_symlink())
+        self.assertFalse((self.home / ".agents/skills/kw-mode").is_symlink())
+
+    def test_setup_uses_active_codex_override(self):
+        repo = self.copy_repo()
+        normal = self.home / ".codex/AGENTS.md"
+        override = self.home / ".codex/AGENTS.override.md"
+        normal.parent.mkdir(parents=True)
+        normal.write_text("Normal guidance.\n")
+        override.write_text("Override guidance.\n")
+        result = self.run_cli(repo, "setup", "--apply", "--runtime", "codex", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(normal.read_text(), "Normal guidance.\n")
+        self.assertIn("<!-- kw-mode:begin -->", override.read_text())
+        self.assertFalse((self.home / ".claude").exists())
+        result = self.run_cli(repo, "doctor", "--defaults", "--runtime", "codex", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        result = self.run_cli(repo, "setup", "--remove", "--apply", "--runtime", "codex", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(override.read_text(), "Override guidance.\n")
+        self.assertEqual(normal.read_text(), "Normal guidance.\n")
+
+    def test_malformed_default_block_prevents_setup_changes(self):
+        repo = self.copy_repo()
+        path = self.home / ".codex/AGENTS.md"
+        path.parent.mkdir(parents=True)
+        original = "My preferences\n<!-- kw-mode:begin -->\nUnclosed block.\n"
+        path.write_text(original)
+        result = self.run_cli(repo, "setup", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(path.read_text(), original)
+        self.assertFalse((self.home / ".claude").exists())
+        self.assertFalse((self.home / ".agents").exists())
+
+    def test_link_only_does_not_enable_global_defaults(self):
+        repo = self.copy_repo()
+        result = self.run_cli(repo, "link", "--apply", "--home", str(self.home))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        result = self.run_cli(repo, "doctor", "--defaults", "--home", str(self.home))
+        self.assertEqual(result.returncode, 1)
+        self.assertFalse((self.home / ".claude/CLAUDE.md").exists())
+        self.assertFalse((self.home / ".codex/AGENTS.md").exists())
 
 
 if __name__ == "__main__":

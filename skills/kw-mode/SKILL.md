@@ -1,6 +1,6 @@
 ---
 name: kw-mode
-description: "KW's engineering mode, based on pstack. Use for /kw-mode, $kw-mode, or requests to work in KW's style: route tasks through grounded investigation, deliberate design, and evidence-based verification."
+description: "Default engineering workflow for implementation, debugging, technical investigation, design, review, and skill maintenance. Route the task through grounded reasoning and evidence-based verification; also available as /kw-mode or $kw-mode."
 ---
 
 # KW mode
@@ -19,9 +19,10 @@ discipline while using the tools of the current runtime.
 4. Read linked workflows when a step needs them. Verify each meaningful unit
    before moving on. Report the result and the evidence, including gaps.
 
-Once invoked, continue this mode across related turns in the current conversation
-until the user opts out. Keep casual replies lightweight. A new conversation
-needs its own invocation; this file does not create persistent runtime state.
+Apply this mode by default to substantive engineering tasks; no explicit command
+is needed. The installed global instructions establish this default in new
+sessions. Continue across related turns unless the user opts out for the task or
+session. Keep casual replies lightweight and load only the references needed.
 
 ## Working contract
 

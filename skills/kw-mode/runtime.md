@@ -4,9 +4,15 @@ Resolve paths relative to this skill's real directory, following its installatio
 symlink. Pass absolute reference paths to delegates so they can find the same
 instructions. Supporting markdown files are read with the host's file tools.
 
+For hub maintenance, the repository root is two parent directories above this
+resolved skill directory. Run `<hub-root>/bin/doctor` and `<hub-root>/bin/test`
+by absolute path, or run `bin/doctor` and `bin/test` from that root. Do not resolve
+these commands against the project currently being worked on.
+
 ## Claude Code
 
-Invoke `/kw-mode <task>`. Use the native task list and subagent tool available in
+Global user instructions load the default; `/kw-mode <task>` remains an optional
+explicit invocation. Use the native task list and subagent tool available in
 the running version. Prefer the built-in explorer for scoped read-only source
 discovery and a general-purpose agent for implementation. Inspect available agent
 types before naming a specialized role; the role names below are responsibilities,
@@ -14,7 +20,8 @@ not registered agent identifiers. Omit a model override to inherit the session.
 
 ## Codex
 
-Invoke `$kw-mode <task>`. Use the available planning and delegation tools. Do not
+Global user instructions load the default; `$kw-mode <task>` remains an optional
+explicit invocation. Use the available planning and delegation tools. Do not
 assume a `Task` API, Claude agent definitions, or a particular `agent_type` exists.
 Map the responsibility to a supported tool or execute it locally. Inherit the
 parent model unless the user or project explicitly selected another available one.

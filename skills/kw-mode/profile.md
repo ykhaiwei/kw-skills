@@ -3,6 +3,8 @@
 ## Confirmed choices
 
 - Name: `kw-mode`.
+- Apply automatically to substantive work in every session. No slash command is
+  required. Keep casual conversation lightweight and respect explicit opt-outs.
 - Claude Code is the primary runtime; Codex is also used. No Cursor dependency.
 - Keep pstack's philosophy and general workflow as the baseline, then build on it.
 - Use deez-skills as a reference for a shared, maintainable skill hub.

@@ -12,5 +12,6 @@ or update their working conventions.
    [profile](../profile.md). Read [encode lessons](../principles/encode-lessons-in-structure.md).
 4. Apply requested corrections within their scope. If the user requested proposals
    only, present the draft. Do not rewrite unrelated installed skills.
-5. Run this repository's `bin/doctor` and any relevant script tests. Explain which
-   decision will change next time and what evidence motivated it.
+5. Run `bin/doctor` from the hub root, resolved through [runtime](../runtime.md),
+   and any relevant script tests. Explain which decision will change next time
+   and what evidence motivated it.

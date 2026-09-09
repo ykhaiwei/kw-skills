@@ -7,6 +7,8 @@
 3. Establish how the feature will be exercised. Reuse the nearest harness; build a
    small verification tool if the new behavior otherwise cannot be observed.
 4. Implement in [verifiable units](../principles/sequence-verifiable-units.md).
+   Before delegation, identify blocking checks, independent workstreams, shared
+   mutable state, and the smallest safe decomposition. Keep shared writers isolated.
    Subtract obsolete paths where safe. Keep speculative features outside the diff.
 5. Exercise the actual user flow with [verify](../workflows/verify.md), including
    relevant error, empty, persistence, or lifecycle cases. Inspect UI appearance

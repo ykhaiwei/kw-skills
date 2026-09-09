@@ -12,6 +12,8 @@ import tomllib
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_START = "\n<!-- kw-mode:begin -->\n"
+DEFAULT_END = "<!-- kw-mode:end -->\n"
 
 
 def inside(root, value):
@@ -24,7 +26,7 @@ def inside(root, value):
     return resolved
 
 
-def registry(root):
+def registry(root, require_sources=True):
     data = tomllib.loads((root / "registry.toml").read_text())
     if data.get("meta", {}).get("version") != 1:
         raise ValueError("Unsupported registry version")
@@ -38,7 +40,7 @@ def registry(root):
         if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
             raise ValueError(f"Invalid skill name: {name}")
         skill = inside(root, entry["path"])
-        if not (skill / "SKILL.md").is_file():
+        if require_sources and not (skill / "SKILL.md").is_file():
             raise ValueError(f"Missing skill: {name}")
         if not entry.get("runtimes") or any(
             runtime not in data["runtimes"] for runtime in entry["runtimes"]
@@ -47,8 +49,8 @@ def registry(root):
     return data
 
 
-def link_plan(root, home, selected=None):
-    data = registry(root)
+def link_plan(root, home, selected=None, remove=False):
+    data = registry(root, require_sources=not remove)
     selected = set(selected or data["runtimes"])
     if selected - data["runtimes"].keys():
         raise ValueError("Unknown runtime selection")
@@ -106,6 +108,76 @@ def change_links(plan, apply=False, remove=False):
         print("Preview only. Add --apply to make these changes.")
 
 
+def default_text(before, block):
+    if "<!-- kw-mode:begin -->" in before or "<!-- kw-mode:end -->" in before:
+        if before.count(DEFAULT_START) != 1 or before.count(DEFAULT_END) != 1:
+            raise ValueError("Malformed KW default block; existing instructions left untouched")
+        start = before.index(DEFAULT_START)
+        end = before.index(DEFAULT_END)
+        if end < start:
+            raise ValueError("Reversed KW default markers; existing instructions left untouched")
+        return before[:start] + block + before[end + len(DEFAULT_END):]
+    return before + block
+
+
+def default_plan(root, home, selected=None, remove=False):
+    data = registry(root, require_sources=not remove)
+    selected = set(selected or data["skills"]["kw-mode"]["runtimes"])
+    if selected - data["runtimes"].keys():
+        raise ValueError("Unknown runtime selection")
+    skill_file = inside(root, data["skills"]["kw-mode"]["path"]) / "SKILL.md"
+    block = ""
+    if not remove:
+        template = (root / "instructions/default.md").read_text()
+        block = DEFAULT_START + template.format(skill_file=skill_file, hub_root=root.resolve()).strip() + "\n" + DEFAULT_END
+    destinations = []
+    if "claude" in selected:
+        destinations.append(("claude", home / ".claude/CLAUDE.md"))
+    if "codex" in selected:
+        codex_dir = home / ".codex"
+        if home.resolve() == Path.home().resolve() and os.environ.get("CODEX_HOME"):
+            codex_dir = Path(os.environ["CODEX_HOME"]).expanduser()
+        override = codex_dir / "AGENTS.override.md"
+        normal = codex_dir / "AGENTS.md"
+        if remove:
+            destinations.extend(("codex", path) for path in (normal, override))
+        else:
+            active = override if override.is_file() and override.read_text().strip() else normal
+            destinations.append(("codex", active))
+    result = []
+    seen = set()
+    for runtime, destination in destinations:
+        destination = destination.resolve()
+        if destination in seen:
+            continue
+        seen.add(destination)
+        before = destination.read_bytes().decode() if destination.exists() else ""
+        after = default_text(before, block)
+        result.append((runtime, destination, before, after))
+    return result
+
+
+def change_defaults(plan, apply=False):
+    for runtime, destination, before, after in plan:
+        action = "keep" if before == after else "update"
+        print(f"{action:6} {runtime:6} default instructions: {destination}")
+        if before == after:
+            continue
+        if not apply:
+            if DEFAULT_START in after:
+                start = after.index(DEFAULT_START)
+                end = after.index(DEFAULT_END) + len(DEFAULT_END)
+                print(after[start:end])
+            else:
+                print("Remove the KW default block; preserve all surrounding text.")
+            continue
+        current = destination.read_bytes().decode() if destination.exists() else ""
+        if current != before:
+            raise ValueError(f"Instructions changed during setup: {destination}")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(after.encode())
+
+
 def markdown_targets(path):
     text = path.read_text()
     for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", text):
@@ -115,7 +187,25 @@ def markdown_targets(path):
         yield (path.parent / target).resolve()
 
 
-def doctor(root, home=None, installed=False, selected=None):
+def has_description(front):
+    """Check presence in common scalar forms, not the complete YAML grammar."""
+    lines = front.splitlines()
+    for index, line in enumerate(lines):
+        if not line.startswith("description:"):
+            continue
+        value = line.partition(":")[2].strip()
+        if re.fullmatch(r"[>|][+-]?(?:[ \t]+#.*)?", value):
+            for following in lines[index + 1:]:
+                if following.strip():
+                    return following.startswith((" ", "\t"))
+            return False
+        if value.startswith(('"', "'")):
+            return len(value) > 1 and value[-1] == value[0] and bool(value[1:-1].strip())
+        return bool(value) and not value.startswith("#")
+    return False
+
+
+def doctor(root, home=None, installed=False, selected=None, quiet=False, defaults=False):
     root = root.resolve()
     data = registry(root)
     errors = []
@@ -133,7 +223,7 @@ def doctor(root, home=None, installed=False, selected=None):
         front = parts[1]
         if not re.search(rf"^name: {re.escape(name)}$", front, re.M):
             errors.append(f"Frontmatter name mismatch: {name}")
-        if not re.search(r"^description: \S.+$", front, re.M):
+        if not has_description(front):
             errors.append(f"Missing description: {name}")
         pending = [skill / "SKILL.md"]
         reached = set()
@@ -163,57 +253,78 @@ def doctor(root, home=None, installed=False, selected=None):
         if not local.is_file() or local in recorded:
             errors.append(f"Missing or duplicate provenance target: {entry['local']}")
         recorded.add(local)
-        if not re.fullmatch(r"[a-f0-9]{64}", entry.get("upstream_sha256", "")):
-            errors.append(f"Missing source hash: {entry['local']}")
-    adapted = set()
+        origin = entry.get("origin", "upstream")
+        if origin == "upstream":
+            if not entry.get("upstream"):
+                errors.append(f"Missing upstream path: {entry['local']}")
+            if not re.fullmatch(r"[a-f0-9]{64}", entry.get("upstream_sha256", "")):
+                errors.append(f"Missing source hash: {entry['local']}")
+        elif origin == "local":
+            if "upstream" in entry or "upstream_sha256" in entry:
+                errors.append(f"Local entry has upstream fields: {entry['local']}")
+        else:
+            errors.append(f"Unknown origin {origin!r}: {entry['local']}")
+    references = set()
     for entry in data["skills"].values():
         skill = inside(root, entry["path"])
         for section in ("principles", "playbooks", "workflows"):
-            adapted.update(p.resolve() for p in (skill / section).glob("*.md") if p.name != "index.md")
-    if adapted != recorded:
-        errors.append("Adapted references and provenance records disagree")
+            references.update(p.resolve() for p in (skill / section).glob("*.md") if p.name != "index.md")
+    if references != recorded:
+        errors.append("References and provenance records disagree")
     if not (root / "LICENSE").is_file():
         errors.append("Missing license")
     if installed:
         for runtime, _, destination, status in link_plan(root, home or Path.home(), selected):
             if status != "linked":
                 errors.append(f"{runtime}: {status} at {destination}")
+    if defaults:
+        for runtime, destination, before, after in default_plan(root, home or Path.home(), selected):
+            if before != after:
+                errors.append(f"{runtime}: missing or outdated default instructions at {destination}")
     if errors:
         for error in errors:
             print(f"FAIL {error}")
         return 1
-    count = sum(1 for entry in data["skills"].values() for _ in inside(root, entry["path"]).rglob("*.md"))
-    print(f"PASS {len(registered)} skill, {count} markdown files, references and provenance valid")
-    if installed:
-        print("PASS selected runtime symlinks resolve to this source")
+    if not quiet:
+        count = sum(1 for entry in data["skills"].values() for _ in inside(root, entry["path"]).rglob("*.md"))
+        print(f"PASS {len(registered)} skill, {count} markdown files, references and provenance valid")
+        if installed:
+            print("PASS selected runtime symlinks resolve to this source")
+        if defaults:
+            print("PASS selected runtimes have current KW default instructions")
     return 0
 
 
 def main(argv=None):
     args_list = sys.argv[1:] if argv is None else argv
     alias = Path(sys.argv[0]).name
-    if alias in {"link", "doctor", "test"}:
+    if alias in {"link", "setup", "doctor", "test"}:
         args_list = [alias, *args_list]
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     link = sub.add_parser("link", help="Preview or apply skill symlinks")
-    link.add_argument("--apply", action="store_true")
-    link.add_argument("--remove", action="store_true")
+    setup = sub.add_parser("setup", help="Install skill links and make KW mode the default")
+    for command in (link, setup):
+        command.add_argument("--apply", action="store_true")
+        command.add_argument("--remove", action="store_true")
     check = sub.add_parser("doctor", help="Validate references, provenance, and optional installation")
     check.add_argument("--installed", action="store_true")
-    for command in (link, check):
+    check.add_argument("--defaults", action="store_true")
+    for command in (link, setup, check):
         command.add_argument("--home", type=Path, default=Path.home(), help="Override installation home for testing")
         command.add_argument("--runtime", action="append", choices=["claude", "codex"])
     sub.add_parser("test", help="Run installer and integrity tests")
     args = parser.parse_args(args_list)
     try:
         if args.command == "doctor":
-            return doctor(ROOT, args.home, args.installed, args.runtime)
-        if args.command == "link":
-            if doctor(ROOT):
+            return doctor(ROOT, args.home, args.installed, args.runtime, defaults=args.defaults)
+        if args.command in {"link", "setup"}:
+            if not args.remove and doctor(ROOT, quiet=True):
                 return 1
-            plan = link_plan(ROOT, args.home.expanduser().resolve(), args.runtime)
+            plan = link_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove)
+            instructions = default_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove) if args.command == "setup" else []
             change_links(plan, args.apply, args.remove)
+            change_defaults(instructions, args.apply)
             return 0
         return subprocess.call([sys.executable, "-m", "unittest", "discover", "-s", str(ROOT / "tests"), "-v"], cwd=ROOT)
     except (OSError, ValueError, KeyError, TypeError) as error:
