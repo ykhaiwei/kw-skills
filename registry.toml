@@ -1,0 +1,12 @@
+[meta]
+version = 1
+
+[skills.kw-mode]
+path = "skills/kw-mode"
+runtimes = ["claude", "codex"]
+
+[runtimes.claude]
+skills_dir = ".claude/skills"
+
+[runtimes.codex]
+skills_dir = ".agents/skills"
