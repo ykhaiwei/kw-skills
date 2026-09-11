@@ -16,8 +16,8 @@ HUB = Path(__file__).resolve().parents[3]
 def git(directory, *args):
     return subprocess.run(
         ["git", "-C", str(directory), *args], check=True, capture_output=True,
-        text=True, timeout=60,
-    ).stdout.strip()
+        timeout=60,
+    ).stdout.decode("utf-8")
 
 
 def read_json(path):
@@ -70,7 +70,7 @@ def scan(hub=HUB, force=False, now=None):
             checkout = Path(temporary) / "source"
             git(Path(temporary), "clone", "--filter=blob:none", "--no-checkout",
                 "--single-branch", "--branch", "main", "--", repository, str(checkout))
-            head = git(checkout, "rev-parse", "HEAD")
+            head = git(checkout, "rev-parse", "HEAD").strip()
             try:
                 git(checkout, "cat-file", "-e", baseline + "^{commit}")
             except subprocess.CalledProcessError:
@@ -87,7 +87,7 @@ def scan(hub=HUB, force=False, now=None):
                 "diff_path": str(cache / "latest.diff"),
             }
             diff_temp = cache / "latest.diff.tmp"
-            diff_temp.write_text(diff + "\n")
+            diff_temp.write_bytes(diff.encode("utf-8"))
             diff_temp.replace(cache / "latest.diff")
             save_json(cache / "state.json", report)
             (cache / "failure.json").unlink(missing_ok=True)
