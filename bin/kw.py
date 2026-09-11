@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Validate the KW hub and manage only its registered skill symlinks."""
+"""Validate the kw hub and manage its skill links and default instructions."""
 
 import argparse
 import json
 import os
 from pathlib import Path
 import re
-import subprocess
+import stat
 import sys
+import tempfile
 import tomllib
 
 
@@ -110,13 +111,21 @@ def change_links(plan, apply=False, remove=False):
 
 def default_text(before, block):
     if "<!-- kw-mode:begin -->" in before or "<!-- kw-mode:end -->" in before:
-        if before.count(DEFAULT_START) != 1 or before.count(DEFAULT_END) != 1:
-            raise ValueError("Malformed KW default block; existing instructions left untouched")
-        start = before.index(DEFAULT_START)
-        end = before.index(DEFAULT_END)
-        if end < start:
-            raise ValueError("Reversed KW default markers; existing instructions left untouched")
-        return before[:start] + block + before[end + len(DEFAULT_END):]
+        markers = list(re.finditer(r"(?m)^<!-- kw-mode:(begin|end) -->(?:\r?\n|$)", before))
+        if (before.count("<!-- kw-mode:begin -->") != 1
+                or before.count("<!-- kw-mode:end -->") != 1 or len(markers) != 2):
+            raise ValueError("Malformed kw default block; existing instructions left untouched")
+        if [marker[1] for marker in markers] != ["begin", "end"]:
+            raise ValueError("Reversed kw default markers; existing instructions left untouched")
+        start = markers[0].start()
+        separator = re.search(r"(?:\A|(?<=\n))\r?\n\Z", before[:start])
+        if separator:
+            start = separator.start()
+            if block:
+                block = separator[0] + block.removeprefix("\n")
+        else:
+            block = block.removeprefix("\n")
+        return before[:start] + block + before[markers[1].end():]
     return before + block
 
 
@@ -129,7 +138,9 @@ def default_plan(root, home, selected=None, remove=False):
     block = ""
     if not remove:
         template = (root / "instructions/default.md").read_text()
-        block = DEFAULT_START + template.format(skill_file=skill_file, hub_root=root.resolve()).strip() + "\n" + DEFAULT_END
+        values = {"skill_file": str(skill_file), "hub_root": str(root.resolve())}
+        expanded = re.sub(r"\{(skill_file|hub_root)\}", lambda match: values[match[1]], template)
+        block = DEFAULT_START + expanded.strip() + "\n" + DEFAULT_END
     destinations = []
     if "claude" in selected:
         destinations.append(("claude", home / ".claude/CLAUDE.md"))
@@ -164,18 +175,36 @@ def change_defaults(plan, apply=False):
         if before == after:
             continue
         if not apply:
-            if DEFAULT_START in after:
-                start = after.index(DEFAULT_START)
-                end = after.index(DEFAULT_END) + len(DEFAULT_END)
+            if "<!-- kw-mode:begin -->" in after:
+                start = after.index("<!-- kw-mode:begin -->")
+                end = after.index("<!-- kw-mode:end -->") + len("<!-- kw-mode:end -->")
                 print(after[start:end])
             else:
-                print("Remove the KW default block; preserve all surrounding text.")
+                print("Remove the kw default block; preserve all surrounding text.")
             continue
         current = destination.read_bytes().decode() if destination.exists() else ""
         if current != before:
             raise ValueError(f"Instructions changed during setup: {destination}")
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(after.encode())
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                dir=destination.parent, prefix=f".{destination.name}.",
+                suffix=".tmp", delete=False,
+            ) as stream:
+                temporary = Path(stream.name)
+                stream.write(after.encode())
+                stream.flush()
+                os.fsync(stream.fileno())
+            if destination.exists():
+                temporary.chmod(stat.S_IMODE(destination.stat().st_mode))
+            current = destination.read_bytes().decode() if destination.exists() else ""
+            if current != before:
+                raise ValueError(f"Instructions changed during setup: {destination}")
+            temporary.replace(destination)
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
 
 
 def markdown_targets(path):
@@ -255,6 +284,9 @@ def doctor(root, home=None, installed=False, selected=None, quiet=False, default
         recorded.add(local)
         origin = entry.get("origin", "upstream")
         if origin == "upstream":
+            commit = entry.get("upstream_commit", provenance.get("commit", ""))
+            if not isinstance(commit, str) or not re.fullmatch(r"[a-f0-9]{40}", commit):
+                errors.append(f"Unpinned source commit: {entry['local']}")
             if not entry.get("upstream"):
                 errors.append(f"Missing upstream path: {entry['local']}")
             if not re.fullmatch(r"[a-f0-9]{64}", entry.get("upstream_sha256", "")):
@@ -273,6 +305,13 @@ def doctor(root, home=None, installed=False, selected=None, quiet=False, default
         errors.append("References and provenance records disagree")
     if not (root / "LICENSE").is_file():
         errors.append("Missing license")
+    documents = [*root.glob("*.md"), *(root / "docs").rglob("*.md")]
+    for path in documents:
+        for target in markdown_targets(path):
+            if not target.is_relative_to(root):
+                errors.append(f"Documentation link leaves repository: {path.name}")
+            elif not target.exists():
+                errors.append(f"Broken documentation link: {path.name} -> {target.relative_to(root)}")
     if installed:
         for runtime, _, destination, status in link_plan(root, home or Path.home(), selected):
             if status != "linked":
@@ -291,19 +330,19 @@ def doctor(root, home=None, installed=False, selected=None, quiet=False, default
         if installed:
             print("PASS selected runtime symlinks resolve to this source")
         if defaults:
-            print("PASS selected runtimes have current KW default instructions")
+            print("PASS selected runtimes have current kw default instructions")
     return 0
 
 
 def main(argv=None):
     args_list = sys.argv[1:] if argv is None else argv
     alias = Path(sys.argv[0]).name
-    if alias in {"link", "setup", "doctor", "test"}:
+    if alias in {"link", "setup", "doctor"}:
         args_list = [alias, *args_list]
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     link = sub.add_parser("link", help="Preview or apply skill symlinks")
-    setup = sub.add_parser("setup", help="Install skill links and make KW mode the default")
+    setup = sub.add_parser("setup", help="Install skill links and make kw mode the default")
     for command in (link, setup):
         command.add_argument("--apply", action="store_true")
         command.add_argument("--remove", action="store_true")
@@ -313,20 +352,17 @@ def main(argv=None):
     for command in (link, setup, check):
         command.add_argument("--home", type=Path, default=Path.home(), help="Override installation home for testing")
         command.add_argument("--runtime", action="append", choices=["claude", "codex"])
-    sub.add_parser("test", help="Run installer and integrity tests")
     args = parser.parse_args(args_list)
     try:
         if args.command == "doctor":
             return doctor(ROOT, args.home, args.installed, args.runtime, defaults=args.defaults)
-        if args.command in {"link", "setup"}:
-            if not args.remove and doctor(ROOT, quiet=True):
-                return 1
-            plan = link_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove)
-            instructions = default_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove) if args.command == "setup" else []
-            change_links(plan, args.apply, args.remove)
-            change_defaults(instructions, args.apply)
-            return 0
-        return subprocess.call([sys.executable, "-m", "unittest", "discover", "-s", str(ROOT / "tests"), "-v"], cwd=ROOT)
+        if not args.remove and doctor(ROOT, quiet=True):
+            return 1
+        plan = link_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove)
+        instructions = default_plan(ROOT, args.home.expanduser().resolve(), args.runtime, remove=args.remove) if args.command == "setup" else []
+        change_links(plan, args.apply, args.remove)
+        change_defaults(instructions, args.apply)
+        return 0
     except (OSError, ValueError, KeyError, TypeError) as error:
         print(f"ERROR {error}", file=sys.stderr)
         return 1

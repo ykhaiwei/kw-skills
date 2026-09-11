@@ -1,4 +1,4 @@
-## Default workflow: KW mode
+## Default workflow: kw mode
 
 Use kw-mode automatically for engineering work, technical investigations, design,
 reviews, and skill maintenance. Do not wait for a slash command or ask whether to

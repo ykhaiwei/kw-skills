@@ -5,9 +5,10 @@ symlink. Pass absolute reference paths to delegates so they can find the same
 instructions. Supporting markdown files are read with the host's file tools.
 
 For hub maintenance, the repository root is two parent directories above this
-resolved skill directory. Run `<hub-root>/bin/doctor` and `<hub-root>/bin/test`
-by absolute path, or run `bin/doctor` and `bin/test` from that root. Do not resolve
-these commands against the project currently being worked on.
+resolved skill directory. Run `<hub-root>/bin/doctor` by absolute path, or run
+`bin/doctor` from that root. Do not resolve this command against the project
+currently being worked on. For this hub's tooling changes, use temporary behavior
+checks, record the results in the review handoff, and remove the checks afterward.
 
 ## Claude Code
 

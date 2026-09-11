@@ -1,6 +1,6 @@
 # Review upstream updates
 
-Use for “check pstack for useful updates”, “weekly KW update check”, or a request
+Use for “check pstack for useful updates”, “weekly kw update check”, or a request
 to refresh this mode from upstream. [Weekly upkeep](../workflows/weekly-upkeep.md)
 also routes here when its automatic scan discovers changes. Use its saved report
 and diff when available; an explicit check-now request first forces a fresh scan.
@@ -25,7 +25,7 @@ and diff when available; an explicit check-now request first forces a fresh scan
    another baseline silently. If history diverged, disclose it and compare the
    endpoint trees. Revisit pending recommendations even when there are no new
    upstream changes.
-4. Judge each change against KW's actual files and recorded adaptations. Recommend
+4. Judge each change against kw's actual files and recorded adaptations. Recommend
    **adopt**, **adapt**, **skip**, or **defer**, with a concrete benefit, local
    target, and source commit/file. Favor changes that improve investigation,
    design, verification, or clarity. Preserve Claude-first native operation,
@@ -46,7 +46,8 @@ and diff when available; an explicit check-now request first forces a fresh scan
    the original source bytes, and adaptation notes. A selective import uses an
    entry-level `upstream_commit`; preserve the top-level baseline for untouched
    entries. Do not relabel all files as the newest version after a partial import.
-   Run the hub's doctor and tests. Commit or publish only within the user's scope.
+   Run the hub's doctor and relevant temporary behavior checks. Commit or publish
+   only within the user's scope.
 
 ## Comparison recipe
 
