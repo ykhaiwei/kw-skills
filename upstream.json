@@ -369,6 +369,14 @@
       "upstream": "pstack/skills/unslop/SKILL.md",
       "upstream_sha256": "c6d2572294d933a428211921069e9a248490e9b466ca59437cb4d9de248600ca",
       "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+    },
+    {
+      "local": "skills/kw-mode/playbooks/upstream-review.md",
+      "origin": "local"
+    },
+    {
+      "local": "skills/kw-mode/workflows/weekly-upkeep.md",
+      "origin": "local"
     }
   ],
   "architecture_reference": "https://github.com/daryl-tg/deez-skills",
