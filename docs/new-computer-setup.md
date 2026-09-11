@@ -243,14 +243,23 @@ Edit [profile.md](../skills/kw-mode/profile.md) for preferences and
 instructions as a short pointer to the skill so future updates have one source
 of truth.
 
-For ongoing upkeep, KW mode automatically checks when you start substantive work
-and its seven-day interval is due. Ask “check pstack for useful updates to KW mode”
-to check sooner. The [upstream review log](upstream-reviews.md) carries the last completed
-check and pending ideas across computers when transferred with the repository.
+For ongoing upkeep, kw mode automatically checks when you start substantive work
+and its seven-day interval is due. Ask “check pstack for useful updates to kw mode”
+to check sooner. The [upstream review log](upstream-reviews.md) carries the last
+completed check and pending ideas across computers when transferred with the
+repository.
 The check recommends selective changes; it does not automatically import them.
 The ignored `.kw-state/` cache is machine-local and needs no migration. The first
 session on a new computer checks again. Nothing runs while the assistants are
 closed, and failed checks never block your engineering task.
+
+Substantial implementation tasks automatically request an opposite-runtime review,
+falling back to a fresh native reviewer when needed. The original agent fixes
+confirmed findings and prepares commits. Install and sign in to both CLIs to make
+cross-runtime review available; the main setup still works with one runtime.
+The local `.kw-review/<task>/review.md` records feedback and resolutions. These
+notes are excluded from Git; transfer active reviews separately when moving
+computers. New tasks create their own handoffs.
 
 ## Completion report for the agent
 

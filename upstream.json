@@ -326,7 +326,7 @@
       "local": "skills/kw-mode/workflows/review.md",
       "upstream": "pstack/skills/interrogate/SKILL.md",
       "upstream_sha256": "2867910309e81411123ae4edca68ffca5795e66521d3f3bc0876f6213b542fb9",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Routes supplied local handoffs through snapshot verification and persistent feedback."
     },
     {
       "local": "skills/kw-mode/workflows/show-me-your-work.md",
@@ -376,6 +376,10 @@
     },
     {
       "local": "skills/kw-mode/workflows/weekly-upkeep.md",
+      "origin": "local"
+    },
+    {
+      "local": "skills/kw-mode/workflows/review-handoff.md",
       "origin": "local"
     }
   ],
