@@ -12,6 +12,8 @@ discipline while using the tools of the current runtime.
 
 1. Read [profile.md](profile.md) and [runtime.md](runtime.md). Read repository
    instructions and inspect the working state before changing files.
+   At the first substantive task in a session, follow
+   [weekly upkeep](workflows/weekly-upkeep.md) for the lightweight due check.
 2. Read the [principles index](principles/index.md). Open the leaves relevant to
    the actual decisions; an index entry is not a substitute for the full rule.
 3. Match the request below, read that playbook, and use its numbered steps as
@@ -70,6 +72,7 @@ Use the narrowest fitting playbook. For an unfamiliar cross-cutting task, read
 | Diagnose a captured trace or profile | [Trace forensics](playbooks/trace-forensics.md) |
 | Match an existing visual implementation | [Visual parity](playbooks/visual-parity.md) |
 | Author or change a skill | [Authoring a skill](playbooks/authoring-a-skill.md) |
+| Check pstack for useful updates | [Upstream review](playbooks/upstream-review.md) |
 | Compare the behavior of prompts or skills | [Eval](playbooks/eval.md) |
 | Bring an open PR/MR to merge-ready | [Babysit](playbooks/babysit.md) |
 | Land verified work | [Shipping](playbooks/shipping.md) |

@@ -8,6 +8,10 @@
 - Claude Code is the primary runtime; Codex is also used. No Cursor dependency.
 - Keep pstack's philosophy and general workflow as the baseline, then build on it.
 - Use deez-skills as a reference for a shared, maintainable skill hub.
+- Check pstack automatically when KW mode starts substantive work and the weekly
+  interval is due; explicit checks can run sooner. Use
+  [weekly upkeep](workflows/weekly-upkeep.md) and selectively adapt useful ideas
+  when requested. Keep review history separate from imported provenance.
 
 ## Initial defaults
 
