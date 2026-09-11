@@ -29,6 +29,49 @@ parent model unless the user or project explicitly selected another available on
 
 ## Roles and handoffs
 
+### Automatic review across runtimes
+
+For [review handoffs](workflows/review-handoff.md), use the opposite runtime first.
+Resolve the installed CLI and read its help before choosing flags. Keep the author
+in the current runtime; only the independent review crosses to the other runtime.
+
+When supported, Claude's `best` alias selects its most capable available family; see
+[model configuration](https://code.claude.com/docs/en/model-config). For Codex,
+resolve its strongest available coding model from the runtime's model catalog
+and [model guidance](https://learn.chatgpt.com/docs/models). Do not sort model IDs
+lexically or select a hidden approval model. Record the actual model reported by
+the invocation and disclose any model fallback.
+
+Use a fresh noninteractive session, a review-only prompt, and source read access.
+Pass the brief on stdin and capture feedback to a file; avoid shell-interpolating
+the user's task or source text. For installed versions supporting these options:
+
+```sh
+claude -p --model best --effort high --safe-mode --no-session-persistence \
+  --permission-mode dontAsk --tools Read,Glob,Grep --output-format json \
+  < "$review_brief" > "$review_result"
+
+codex exec --model "$review_model" --sandbox read-only --ephemeral \
+  --output-last-message "$review_result" - < "$review_brief"
+```
+
+Run from the reviewed project. `review_brief`, `review_result`, and `review_model`
+are task-specific values resolved by the author, not literal placeholders to send
+to the model. The Claude example disables customization and code-running tools;
+include project instruction paths explicitly and provide the diff as a readable
+artifact. The reviewer must disclose checks it could not execute. Read Codex's
+active configuration for hooks or integrations before launch; a read-only sandbox
+does not itself disable host hooks. Use supported per-session restrictions or the
+native fallback if the review cannot be kept within scope. Do not bypass approval
+or sandbox restrictions to run a review.
+
+CLI versions and account access vary. If an option or model is unsupported, adapt
+to verified equivalent controls or use the native fallback. A native reviewer
+gets the same review-only contract and no authority to fix, delegate, or commit.
+Do not recursively run the full default workflow inside a dispatched reviewer.
+
+### Responsibilities
+
 | Responsibility | Output |
 | --- | --- |
 | Explore | A traced explanation with file and symbol evidence |

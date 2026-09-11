@@ -17,7 +17,7 @@ set it up
 ```
 
 Agents: treat that as a request to follow [AGENTS.md](AGENTS.md) and the
-[setup guide](docs/new-computer-setup.md). Check prerequisites, install KW mode
+[setup guide](docs/new-computer-setup.md). Check prerequisites, install kw mode
 as the default for Claude Code and Codex, preserve existing settings, and verify
 the installation. Handle routine setup and report any remaining user actions.
 
@@ -28,8 +28,9 @@ bin/setup --apply
 bin/doctor --installed --defaults
 ```
 
-Start a new Claude Code or Codex conversation. KW mode is now the default across
-projects. Keep the repo where you cloned it; the installation links back to it.
+After setup succeeds, start a new Claude Code or Codex conversation. The global
+instructions make kw mode the default across projects. Keep the repo where you
+cloned it; the installation links back to it.
 
 ## Use
 
@@ -50,5 +51,14 @@ Agents can start with [AGENTS.md](AGENTS.md) for setup and maintenance.
 Moving computers? Give your agent the [setup guide](docs/new-computer-setup.md),
 which includes a copy-paste prompt.
 
-KW mode checks for upstream updates weekly when you use it. To check sooner, ask:
-`check for useful upstream updates to kw-mode`. Changes are reviewed before import.
+kw mode asks your agent to check for upstream updates when its weekly interval
+is due. To check sooner, ask: `check for useful upstream updates to kw-mode`.
+Changes are reviewed before import; nothing runs while your assistants are closed.
+
+After substantial changes, kw mode automatically requests a review from the
+opposite runtime—Codex to Claude, Claude to Codex—using its strongest available
+model. If unavailable, it uses a fresh reviewer in the current runtime. The
+original agent fixes confirmed findings and prepares logical commits. Local
+review notes stay out of Git; commits and pushes follow your requested scope.
+
+[MIT licensed](LICENSE).

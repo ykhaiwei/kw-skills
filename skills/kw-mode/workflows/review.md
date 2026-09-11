@@ -4,6 +4,10 @@ A review request produces findings; do not apply fixes unless the user requested
 them. Establish the intended behavior and the exact diff or artifact under review.
 Read surrounding callers, contracts, and existing tests before forming a verdict.
 
+For a supplied review handoff, follow [review handoff](review-handoff.md) to check
+its snapshot and return feedback for the author to record, or update the assigned
+review notes when permitted. A review request does not authorize source fixes.
+
 Review correctness, lifecycle and concurrency, compatibility, user experience,
 and unnecessary complexity. Use [blast radius](blast-radius.md) for effects beyond
 the diff, [reader load](../principles/minimize-reader-load.md) for structure, and

@@ -1,5 +1,5 @@
 interface:
-  display_name: "KW Mode"
+  display_name: "kw mode"
   short_description: "Ground, build, review, and prove the result"
   default_prompt: "Use $kw-mode to investigate the task, make the smallest sound change, and verify the result."
 policy:

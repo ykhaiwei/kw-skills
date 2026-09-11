@@ -3,7 +3,7 @@ name: kw-mode
 description: "Default engineering workflow for implementation, debugging, technical investigation, design, review, and skill maintenance. Route the task through grounded reasoning and evidence-based verification; also available as /kw-mode or $kw-mode."
 ---
 
-# KW mode
+# kw mode
 
 Build less, understand deeply, and prove the result. Keep pstack's engineering
 discipline while using the tools of the current runtime.
@@ -85,6 +85,7 @@ Use the narrowest fitting playbook. For an unfamiliar cross-cutting task, read
 | Produce a multi-phase or multi-PR plan | [Multi-phase plan](playbooks/multi-phase-plan.md) |
 | Reclaim abandoned worktrees and owned resources | [Worktree cleanup](playbooks/worktree-cleanup.md) |
 | Prepare or open a review | [Opening a PR](playbooks/opening-a-pr.md) |
+| Leave work for another agent to review or fix review feedback | [Review handoff](workflows/review-handoff.md) |
 
 ## Supporting workflows
 
@@ -109,6 +110,12 @@ These are local references, not separately installed slash commands. For example
 | Keep an auditable decision trail | [Show your work](workflows/show-me-your-work.md) |
 
 ## Reply
+
+After substantial implementation or cleanup, run the automatic
+[review handoff](workflows/review-handoff.md): obtain independent feedback, fix
+confirmed findings, and prepare logical commits. Include the handoff path and
+actual review status. A dispatched reviewer only returns findings; it does not
+start this loop again. Skip this flow for trivial edits and explicit opt-outs.
 
 Lead with what changed or what the investigation established. Give the evidence
 needed to assess it, then material tradeoffs and unfinished work. Link real

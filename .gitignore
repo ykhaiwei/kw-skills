@@ -3,8 +3,8 @@ __pycache__/
 .DS_Store
 .venv/
 /.kw-state/
+/.kw-review/
 .idea/
-/REVIEW.txt
 .env
 .env.*
 !.env.example
