@@ -146,7 +146,7 @@
       "local": "skills/kw-mode/playbooks/authoring-a-skill.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
       "upstream_sha256": "f6a13a445c360b48d6cd72780ac01955f45b82826476efe0e67c7559329407aa",
-      "adaptation": "Uses host skill-authoring guidance; resolves validation tools from the hub root and documents separate local versus upstream provenance entries."
+      "adaptation": "Uses host skill-authoring guidance; resolves validation tools from the hub root and documents separate local versus upstream provenance entries. Uses temporary behavioral checks for this hub, recorded in the local review handoff."
     },
     {
       "local": "skills/kw-mode/playbooks/autonomous-run.md",

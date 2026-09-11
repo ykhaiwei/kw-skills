@@ -1,6 +1,6 @@
 # Working in kw-skills
 
-Use [KW mode](skills/kw-mode/SKILL.md) as the default workflow for work in this
+Use [kw mode](skills/kw-mode/SKILL.md) as the default workflow for work in this
 repository. Read it before substantive work, then load the references relevant
 to the task. The user does not need to invoke a command. Keep casual replies
 lightweight and honor task-specific opt-outs.
@@ -39,8 +39,10 @@ remain a short pointer, not another copy of the playbooks. Edit
 [profile.md](skills/kw-mode/profile.md) for working preferences and
 [runtime.md](skills/kw-mode/runtime.md) for host behavior and maintenance paths.
 
-Run `bin/doctor` for instruction/reference edits and `bin/test` for tooling changes.
-Exercise installation tests in a temporary home, never against real user settings.
+Run `bin/doctor` for instruction/reference edits. Verify tooling changes with
+task-owned temporary checks and remove them after recording the results in the
+review handoff. Exercise installation in a temporary home, never against real
+user settings. This hub does not keep a permanent test suite.
 Keep installation reversible and preserve unrelated files and user instructions.
 Record original references with local provenance and describe adaptations accurately.
 
