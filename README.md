@@ -60,5 +60,8 @@ opposite runtime—Codex to Claude, Claude to Codex—using its strongest availa
 model. If unavailable, it uses a fresh reviewer in the current runtime. The
 original agent fixes confirmed findings and prepares logical commits. Local
 review notes stay out of Git; commits and pushes follow your requested scope.
+Reviewers challenge assumptions and design choices as well as code. Technical
+questions go to the implementing agent; only decisions needing your input reach
+you. Ask `grill me on this plan` for an interactive design discussion.
 
 [MIT licensed](LICENSE).

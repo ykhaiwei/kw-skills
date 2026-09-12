@@ -62,6 +62,7 @@ Use the narrowest fitting playbook. For an unfamiliar cross-cutting task, read
 | Request | Playbook |
 | --- | --- |
 | Understand code or discuss an approach | [Investigation](playbooks/investigation.md) |
+| Grill me on a plan or challenge my design decisions | [Architect](workflows/architect.md) |
 | Reproduce and fix a defect | [Bug fix](playbooks/bug-fix.md) |
 | Add or change behavior | [Feature](playbooks/feature.md) |
 | Change structure while preserving behavior | [Refactoring](playbooks/refactoring.md) |
