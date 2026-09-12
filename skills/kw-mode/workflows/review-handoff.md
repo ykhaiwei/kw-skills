@@ -28,6 +28,10 @@ Respect a user-requested shared or committed review artifact instead when given.
 Record only the context needed to review the result:
 
 - The requested outcome, constraints, and intended behavior.
+- Consequential design choices and assumptions, their supporting evidence, and
+  any user decisions already settled, with the relevant request excerpt or
+  reference. Keep rationale separate from observed facts; label an inferred
+  preference as an assumption, not a confirmed user decision.
 - Repository and branch, base commit, current HEAD, and relevant changed files.
   Include pending tracked and untracked changes. Record content hashes for the
   files under review so later agents can detect changes after the handoff.
@@ -49,8 +53,9 @@ review-specific exception to inheriting the implementation model.
 Use the [runtime contract](../runtime.md) to launch a fresh reviewer without the
 author's conversation. Give it the task contract, snapshot/diff, relevant project
 instructions, and acceptance evidence. It must independently inspect the source,
-report findings with evidence, leave source unchanged, and not delegate or launch
-this workflow again. Freeze the reviewed files while it works; the author can
+follow [review](review.md) to challenge the reasoning, report findings with
+evidence, leave source unchanged, and not delegate or launch this workflow again.
+Freeze the reviewed files while it works; the author can
 prepare commit grouping and messages without editing the snapshot.
 
 If the opposite runtime is missing, unauthenticated, unavailable, or cannot run
@@ -90,13 +95,20 @@ file in the task directory and have one owner reconcile them into the handoff.
 
 After the automatic review, or when asked to “fix the feedback”, reproduce or
 validate each finding before editing. Record each disposition under its ID:
-fixed, declined with evidence, or
-deferred with a reason. Preserve the original finding text. Run relevant checks
+fixed, declined with evidence, or deferred with a reason. Answer technical
+challenges with source evidence or a focused experiment in the handoff. When a
+challenge disproves a premise, revisit the design before patching symptoms.
+Bring only unresolved user decisions to the user, following [review](review.md).
+Preserve the original finding text. Run relevant checks
 and update the file snapshot and author verification evidence.
 
-If changes invalidate the review, request a focused re-review automatically.
-Distinguish
-author verification from independent verification; the fixing agent cannot mark
+Request a focused re-review automatically if changes invalidate the review or
+material technical challenges still need independent verification.
+Include the author's answers and evidence for unresolved technical challenges in
+that pass, even if they required no source changes. These exchanges share the
+same review limit; do not create a separate, unbounded interview loop.
+Distinguish author verification from independent verification; the fixing agent
+cannot mark
 its own changes independently approved. Re-review changed behavior and affected
 boundaries rather than repeating every check without a reason. Use one initial
 review and at most one focused re-review by default. If material findings remain,

@@ -284,7 +284,7 @@
       "local": "skills/kw-mode/workflows/architect.md",
       "upstream": "pstack/skills/architect/SKILL.md",
       "upstream_sha256": "897a59beaa3cab107d98c256206e062cc4a5e9421a45b9d462fbded19291fea5",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Uses the local review workflow to pressure-test consequential choices and support explicitly requested design interviews."
     },
     {
       "local": "skills/kw-mode/workflows/arena.md",
@@ -326,7 +326,7 @@
       "local": "skills/kw-mode/workflows/review.md",
       "upstream": "pstack/skills/interrogate/SKILL.md",
       "upstream_sha256": "2867910309e81411123ae4edca68ffca5795e66521d3f3bc0876f6213b542fb9",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Routes supplied local handoffs through snapshot verification and persistent feedback."
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Routes supplied local handoffs through snapshot verification and persistent feedback. Challenges consequential assumptions and alternatives with evidence; routes technical questions to the author and material user decisions to the user."
     },
     {
       "local": "skills/kw-mode/workflows/show-me-your-work.md",
