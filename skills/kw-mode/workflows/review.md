@@ -22,12 +22,11 @@ concrete tradeoff. A stylistic preference alone is not a defect or a reason to
 reopen a settled user decision. Distinguish a wrong implementation from a missing
 requirement, an unsupported assumption, and an optional improvement.
 
-Investigate facts with the available tools before asking questions. Direct
-remaining technical challenges to the implementing agent, identifying the
+Investigate facts with the available tools before asking questions. For an
+implementation review, direct technical challenges to the author, identifying the
 assumption, its consequence, and the evidence or experiment that would settle it.
-Do not require a live conversation: return unresolved challenges with the findings
-so the author can answer them in the same handoff. The author's assertion alone
-does not establish correctness.
+Return unresolved challenges with the findings so the author can answer them in
+the handoff. An assertion alone does not establish correctness.
 
 Escalate to the user only an unresolved intent, preference, or authorization that
 materially changes the result. Include a recommendation and its tradeoff; group

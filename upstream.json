@@ -284,7 +284,7 @@
       "local": "skills/kw-mode/workflows/architect.md",
       "upstream": "pstack/skills/architect/SKILL.md",
       "upstream_sha256": "897a59beaa3cab107d98c256206e062cc4a5e9421a45b9d462fbded19291fea5",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Uses the local review workflow to pressure-test consequential choices and support explicitly requested design interviews."
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Uses the local review workflow to pressure-test consequential choices and keeps design discussions interactive without requiring a named mode."
     },
     {
       "local": "skills/kw-mode/workflows/arena.md",
