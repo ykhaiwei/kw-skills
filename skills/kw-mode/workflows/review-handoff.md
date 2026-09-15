@@ -55,8 +55,8 @@ author's conversation. Give it the task contract, snapshot/diff, relevant projec
 instructions, and acceptance evidence. It must independently inspect the source,
 follow [review](review.md) to challenge the reasoning, report findings with
 evidence, leave source unchanged, and not delegate or launch this workflow again.
-Freeze the reviewed files while it works; the author can
-prepare commit grouping and messages without editing the snapshot.
+Freeze the reviewed files while it works; the author can prepare commit grouping
+and messages without editing the snapshot.
 
 If the opposite runtime is missing, unauthenticated, unavailable, or cannot run
 with the required restrictions, spawn a fresh native reviewer in the current
@@ -99,8 +99,8 @@ fixed, declined with evidence, or deferred with a reason. Answer technical
 challenges with source evidence or a focused experiment in the handoff. When a
 challenge disproves a premise, revisit the design before patching symptoms.
 Bring only unresolved user decisions to the user, following [review](review.md).
-Preserve the original finding text. Run relevant checks
-and update the file snapshot and author verification evidence.
+Preserve the original finding text. Run relevant checks and update the file
+snapshot and author verification evidence.
 
 Request a focused re-review automatically if changes invalidate the review or
 material technical challenges still need independent verification.
@@ -108,12 +108,11 @@ Include the author's answers and evidence for unresolved technical challenges in
 that pass, even if they required no source changes. These exchanges share the
 same review limit; do not create a separate, unbounded interview loop.
 Distinguish author verification from independent verification; the fixing agent
-cannot mark
-its own changes independently approved. Re-review changed behavior and affected
-boundaries rather than repeating every check without a reason. Use one initial
-review and at most one focused re-review by default. If material findings remain,
-report them honestly with current fixes and verification instead of cycling
-indefinitely or calling the work approved.
+cannot mark its own changes independently approved. Re-review changed behavior
+and affected boundaries rather than repeating every check without a reason. Use
+one initial review and at most one focused re-review by default. If material
+findings remain, report them with current fixes and verification instead of
+cycling indefinitely or calling the work approved.
 
 Once confirmed findings are resolved, prepare commit groups and concise
 `area: imperative summary` messages. Keep each group coherent and independently

@@ -1,11 +1,9 @@
 # Architect
 
-For an explicit “grill me” request, investigate available facts, then put the
-consequential assumptions and choices to the user for discussion. Include your
-recommendation and tradeoff, and let answers determine the next questions.
-The user is the discussion partner; there need not be an implementing agent.
-Use [review's challenge guidance](review.md#challenge-the-reasoning) and the steps
-below where relevant. Stay in discussion until implementation is requested.
+For a design discussion, investigate facts and discuss consequential assumptions
+and choices with the user. Recommend an approach, explain the tradeoff, and let
+answers guide the next questions. Apply the steps below where relevant; stay in
+discussion until implementation is requested.
 
 1. Ground the change with [how](how.md), and [why](why.md) when changing ownership
    or layering. State the behavior and constraints the design must preserve.

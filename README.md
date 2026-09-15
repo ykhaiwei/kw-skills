@@ -3,65 +3,37 @@
 My engineering mode for Claude Code and Codex. Understand the problem, build less,
 and verify the result.
 
-## Install
+## Setup
 
 ```sh
 git clone https://github.com/ykhaiwei/kw-skills.git
 cd kw-skills
 ```
 
-Open this folder in Claude Code or Codex and say:
+Open the folder in Claude Code or Codex and say **“set it up.”**
+Agents follow [AGENTS.md](AGENTS.md) and the [setup guide](docs/new-computer-setup.md).
+The guide also covers manual installation and moving to another computer.
 
-```text
-set it up
-```
-
-Agents: treat that as a request to follow [AGENTS.md](AGENTS.md) and the
-[setup guide](docs/new-computer-setup.md). Check prerequisites, install kw mode
-as the default for Claude Code and Codex, preserve existing settings, and verify
-the installation. Handle routine setup and report any remaining user actions.
-
-To install manually instead, use Python 3.11+ and run:
-
-```sh
-bin/setup --apply
-bin/doctor --installed --defaults
-```
-
-After setup succeeds, start a new Claude Code or Codex conversation. The global
-instructions make kw mode the default across projects. Keep the repo where you
-cloned it; the installation links back to it.
+Once setup finishes, start a new conversation. kw mode becomes the default across
+projects. Keep this checkout in place; the installed skills link back to it.
 
 ## Use
 
-Just describe the task:
+Describe what you need: fix a bug, review a diff, or stress-test a plan. kw mode
+investigates the problem, challenges assumptions, and verifies the result.
+Design discussions stay discussions until you ask for implementation.
 
-```text
-fix this bug and verify it
-review this diff
-let's discuss the approach first
-```
+For substantial changes, your agent requests an
+[independent review](skills/kw-mode/workflows/review-handoff.md) from the other
+runtime when available. It handles technical feedback and prepares commits,
+bringing you decisions that need your input. Commits and pushes follow your
+instructions.
 
-No command needed. `/kw-mode` in Claude Code and `$kw-mode` in Codex still work.
-Say "skip kw-mode for this task" to opt out.
+No command is required. `/kw-mode` in Claude Code and `$kw-mode` in Codex are
+optional. Say “skip kw-mode for this task” to opt out.
 
-Edit [profile.md](skills/kw-mode/profile.md) to customize the defaults.
-Agents can start with [AGENTS.md](AGENTS.md) for setup and maintenance.
-
-Moving computers? Give your agent the [setup guide](docs/new-computer-setup.md),
-which includes a copy-paste prompt.
-
-kw mode asks your agent to check for upstream updates when its weekly interval
-is due. To check sooner, ask: `check for useful upstream updates to kw-mode`.
-Changes are reviewed before import; nothing runs while your assistants are closed.
-
-After substantial changes, kw mode automatically requests a review from the
-opposite runtime—Codex to Claude, Claude to Codex—using its strongest available
-model. If unavailable, it uses a fresh reviewer in the current runtime. The
-original agent fixes confirmed findings and prepares logical commits. Local
-review notes stay out of Git; commits and pushes follow your requested scope.
-Reviewers challenge assumptions and design choices as well as code. Technical
-questions go to the implementing agent; only decisions needing your input reach
-you. Ask `grill me on this plan` for an interactive design discussion.
+Customize [profile.md](skills/kw-mode/profile.md) to change the defaults.
+[Upstream checks](docs/upstream-reviews.md) run when you use the mode and the weekly
+interval is due. Updates are reviewed before adoption.
 
 [MIT licensed](LICENSE).
