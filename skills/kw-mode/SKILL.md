@@ -18,6 +18,10 @@ discipline while using the tools of the current runtime.
    the actual decisions; an index entry is not a substitute for the full rule.
 3. Match the request below, read that playbook, and use its numbered steps as
    the initial task list. Keep a skipped step visible with a short reason.
+   When the requested deliverable changes mid-task, for example an
+   investigation becomes an implementation or an incident interrupts a
+   feature, re-select the playbook and name it, so its steps, including the
+   review handoff, apply from that point.
 4. Read linked workflows when a step needs them. Verify each meaningful unit
    before moving on. Report the result and the evidence, including gaps.
 
