@@ -33,7 +33,9 @@ No command is required. `/kw-mode` in Claude Code and `$kw-mode` in Codex are
 optional. Say “skip kw-mode for this task” to opt out.
 
 Customize [profile.md](skills/kw-mode/profile.md) to change the defaults.
-[Upstream checks](docs/upstream-reviews.md) run when you use the mode and the weekly
-interval is due. Updates are reviewed before adoption.
+[Upstream upkeep](docs/upstream-reviews.md) runs when you use the mode and the weekly
+interval is due. It automatically reviews and applies worthwhile local updates,
+verifies them, and summarizes the result. Nothing runs between sessions; commits
+and publication still follow the user's request.
 
 [MIT licensed](LICENSE).

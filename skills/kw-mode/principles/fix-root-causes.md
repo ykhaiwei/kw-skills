@@ -1,17 +1,11 @@
 # Fix Root Causes
 
-When debugging, do not fix symptoms. Trace every problem to its root cause and fix it there.
+Trace the symptom to the first place the system made a wrong decision or failed to handle a state it should support. A fix belongs there; hiding the symptom leaves the fault available to surface elsewhere.
 
-**Why:** Symptom fixes accumulate. Each workaround makes the system harder to reason about, and the real bug remains. Root-cause fixes are slower upfront but reduce total debugging time.
-
-**Pattern:**
-- Reproduce first
-- Ask "why" until you hit the root cause
-- Do not add guards (adding a nil check to silence a crash is a symptom fix)
-- If a workaround needs a paragraph-long comment to justify it, the code is wrong (fix the code, not the comment)
-- Check for the pattern, not just the instance (grep for the same pattern, fix all instances)
-- When stuck, instrument. Don't guess (add logging, read the actual error)
-
-**Restart bugs: suspect state before code**
-
-When something "fails after restart," suspect stale persistent state first: config files, caches, lock files, serialized state. If clearing a state file restores behavior, prioritize state validation as the fix.
+- Reproduce the failure and inspect the actual error and state. Instrument when the evidence is missing.
+- Ask why at each step until the answer identifies the fault, rather than a consequence of an earlier one.
+- Decide whether the triggering state is legitimate. If the system must support it, handling it is a root-cause fix. If it violates an invariant, find what produced it. Guards, retries, clamping, swallowed errors, and discarded state can conceal that producer; judge them by the contract rather than banning their syntax.
+- For restart-only failures, inspect persisted configuration, caches, locks, and serialized state before changing code. Preserve diagnostic evidence before cleanup.
+- Search for the same fault elsewhere and fix confirmed instances within the requested scope. Record unrelated findings.
+- Treat a workaround needing extensive justification as a reason to revisit the cause; comment length alone does not establish that the code is wrong.
+- When a decisive fact required a deep investigation, propose a cheap ongoing signal that would expose it sooner, such as a focused counter, log field, or state check. Add it when useful and within scope.

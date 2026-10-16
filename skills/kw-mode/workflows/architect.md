@@ -10,6 +10,9 @@ discussion until implementation is requested.
 2. Sketch the caller's usage before implementation: types, signatures, ownership,
    transitions, and module boundaries. Read [foundational thinking](../principles/foundational-thinking.md)
    and [model the domain](../principles/model-the-domain.md).
+   Design for contributors who may read only one module: give mutable state one
+   owner, enforce public boundaries, and derive repeated registries from one
+   source or check their agreement. Preserve supported public compatibility.
 3. For a consequential choice with no established local pattern, compare at least
    two structurally distinct candidates using [arena](arena.md). For a settled
    mechanical change, follow the existing shape without another design exercise.

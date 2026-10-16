@@ -9,9 +9,12 @@
 - Keep pstack's philosophy and general workflow as the baseline, then build on it.
 - Use deez-skills as a reference for a shared, maintainable skill hub.
 - Check pstack automatically when kw mode starts substantive work and the weekly
-  interval is due; explicit checks can run sooner. Use
-  [weekly upkeep](workflows/weekly-upkeep.md) and selectively adapt useful ideas
-  when requested. Keep review history separate from imported provenance.
+  interval is due; explicit checks can run sooner. Automatically review and apply
+  worthwhile local adaptations through [weekly upkeep](workflows/weekly-upkeep.md),
+  then summarize the changes. This standing preference was confirmed on
+  2026-10-16. Preserve runtime choices, unrelated work, and task-specific opt-outs;
+  it does not authorize commits, publication, or changes to external services.
+  Keep review history separate from imported provenance.
 - After substantial implementation, automatically run the
   [review handoff](workflows/review-handoff.md): review with the opposite runtime's
   strongest available model, fall back to a fresh reviewer in the current runtime,

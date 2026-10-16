@@ -1,17 +1,10 @@
 # Attack the Premise
 
-When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes.
+When two or more fixes that share one premise fail the same gate, test the premise before writing another fix that assumes it. Repeated failure is evidence to investigate, not proof that the premise is false.
 
-**Why:** Each failure under a shared premise is evidence about the premise.
+- Write the shared premise in one sentence.
+- Find an observation that would differ if it were false, and make that observation. Examine the distribution of failures as well as their size. Make the check rerunnable when useful per [Build the Lever](build-the-lever.md).
+- If the evidence contradicts the premise, revise it and investigate what the failures share. If it supports the premise, ask the next why per [Fix Root Causes](fix-root-causes.md); the fixes may have addressed a consequence. State unresolved uncertainty when the observation does not distinguish the alternatives.
+- Remove the condition that produces the failure where possible, rather than repeatedly compensating for it. When particular actors consistently lose, investigate what assigns that role. An even distribution alone does not rule out the premise.
 
-**Pattern:**
-- **Write the premise down.** The premise is the one sentence that every failed fix assumed.
-- **Take a census before the next fix.** Count the imbalance per actor. The census shows which actors hold the imbalance, not how large it is. Write the census as a rerunnable script per [Build the Lever](build-the-lever.md).
-- **Read the skew.** If the same few actors hold most of the imbalance on every run, something assigns them that role. Find what assigns the role. That assignment is the next "why" per [Fix Root Causes](fix-root-causes.md).
-- **Remove the asymmetry instead of compensating for it**, per the [Laziness Protocol](laziness-protocol.md). Rotate the role between actors, randomize the assignment, or move the role, so that no actor holds it on every run. A return path, a shared pool, a batched hand-off, or a periodic rebalance leaves the assignment in place and adds work on every run.
-
-**Stop:**
-- Do not start the next fix before the premise is written down and the census exists.
-- If the census is even across actors, the premise is not the cause. Look for the cause elsewhere and keep the census as evidence.
-
-This principle is distinct from [Redesign from First Principles](redesign-from-first-principles.md), which rebuilds a design around a new requirement. It questions a fact the current design assumes.
+Do not start the next speculative fix until the premise and the result of its test are recorded. [Redesign from First Principles](redesign-from-first-principles.md) rebuilds a design around a requirement; this principle checks a fact the current design assumes.

@@ -4,6 +4,8 @@
    Record which branch depends on which predecessor.
 2. Build the root against the actual trunk and each child against its parent's
    current tip. Use one owner per writable branch and follow repository conventions.
+   Assign one topology owner for rebases and base retargets; branch owners
+   coordinate with it before changing ancestry.
 3. Verify each slice before building the next. Use [sequence verifiable units](../principles/sequence-verifiable-units.md)
    and keep the acceptance evidence attached to the tested base/head.
 4. Open authorized reviews with each child targeting its parent. After upstream
@@ -11,3 +13,5 @@
 5. Verify the aggregate stack and report the bottom-to-top dependency list, review
    links where present, and evidence. This playbook delivers the stack for landing;
    merge only when separately covered by the request through [shipping](shipping.md).
+   Once landing begins, coordinate further writes through the shipping owner so
+   verification still covers the code that lands.

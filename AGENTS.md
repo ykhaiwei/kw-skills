@@ -30,7 +30,7 @@ New sessions inherit the default; the current task can read the mode directly.
 
 ## Maintenance
 
-For a requested upstream update check, use the
+For automatic upkeep or a requested upstream update check, use the
 [review playbook](skills/kw-mode/playbooks/upstream-review.md) and maintain the
 [review log](docs/upstream-reviews.md) so later checks retain pending decisions.
 

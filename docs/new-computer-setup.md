@@ -248,7 +248,9 @@ and its seven-day interval is due. Ask “check pstack for useful updates to kw 
 to check sooner. The [upstream review log](upstream-reviews.md) carries the last
 completed check and pending ideas across computers when transferred with the
 repository.
-The check recommends selective changes; it does not automatically import them.
+The standing profile authorizes automatic review and selective local adoption,
+followed by verification and a summary. A task-specific check-only request still
+stops at recommendations. Commits and publication need their own authorization.
 The ignored `.kw-state/` cache is machine-local and needs no migration. The first
 session on a new computer checks again. Nothing runs while the assistants are
 closed, and failed checks never block your engineering task.

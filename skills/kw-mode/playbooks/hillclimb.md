@@ -2,6 +2,8 @@
 
 1. Freeze the metric, target, evaluation workload, and constraints before the first
    attempt. Establish a reproducible baseline and record the available run budget.
+   First validate that the evaluator detects meaningful changes and counts errors
+   and completed work. For performance, use [benchmark checks](../workflows/benchmark.md).
 2. Use the evidence to rank hypotheses. Start with the dominant measured cost or
    failure. Keep the evaluator outside the candidate's write scope.
 3. Change one explanatory factor at a time. Run the same evaluator, preserving

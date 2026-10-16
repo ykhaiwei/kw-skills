@@ -2,11 +2,14 @@
 
 1. Resolve the repository, forge, exact PR/MR scope, and current head/base revisions.
    Read review threads, checks, conflicts, and the requested terminal condition.
+   Follow pagination; the first page is not the complete review or check state.
    Declare the scope before polling: `check` is one read-only status pass, `drive`
    continues to merge-ready, and `threads-only` addresses the requested review
    threads. A status question ends after its report; it does not start repairs.
 2. Classify each blocker as a defect, review decision, conflict, flaky check, or
    external dependency. Inspect evidence before rerunning checks or changing code.
+   Required human approval is an external gate, not a build failure to retry or
+   a check to bypass.
    A suspected flake or infrastructure fault gets one fresh CI run. If the same
    failure recurs, inspect its logs and revise the diagnosis before further action;
    do not repeatedly retry unchanged failures.

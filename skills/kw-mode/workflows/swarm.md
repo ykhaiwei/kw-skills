@@ -5,6 +5,10 @@ slices, and give each slice a named owner and return artifact. Use the
 [runtime contract](../runtime.md) and [separate shared state](../principles/separate-before-serializing-shared-state.md).
 Keep verification criteria outside each worker's write scope.
 
+For verification or measurement, pin artifact revisions and the method, including
+what one sample means, repetition count, and ordering. Require results to record
+these; a missing or mismatched revision or method is a coverage gap, not a pass.
+
 Dispatch only as many workers as the host permits. Each returns completed scope,
 evidence, changed paths, and blockers. Keep useful local integration work with the
 lead. For competing attempts at one problem, use [arena](arena.md) instead.

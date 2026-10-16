@@ -6,6 +6,11 @@
    interaction; for a CLI, invoke the command and inspect output and state; for an
    API, send a request and inspect its effects. Check persistence or restart when
    the behavior depends on them.
+   For a fresh-instance claim, use isolated empty data and wait for migrations
+   and required seed data until the target is usable. A listening port alone is
+   insufficient. Missing journey prerequisites are a failed or blocked check;
+   do not weaken the journey to get a pass. With a stand-in, list setup it supplies
+   that remains unverified on the real target.
 3. Run the original failing case and meaningful neighboring cases. Use real code
    at the boundary under test. Label simulations, mocks, and unavailable services.
 4. Preserve commands, results, and relevant screenshots, logs, or measurements.

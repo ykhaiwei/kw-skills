@@ -7,8 +7,10 @@
     {
       "local": "skills/kw-mode/principles/attack-the-premise.md",
       "upstream": "pstack/skills/principle-attack-the-premise/SKILL.md",
-      "upstream_sha256": "c87bd7536f772f8a403ad8155535ee17a1bbec9a353156693eb3bb1520c87ae3",
-      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
+      "upstream_sha256": "6a932884daad4aa189e9b5d1665226bbc75621d4d2a398fd4003bebd382f4599",
+      "adaptation": "Replaced actor-census prescription with falsifiable premise testing; preserve uncertainty and local links.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/principles/boundary-discipline.md",
@@ -43,8 +45,10 @@
     {
       "local": "skills/kw-mode/principles/fix-root-causes.md",
       "upstream": "pstack/skills/principle-fix-root-causes/SKILL.md",
-      "upstream_sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707",
-      "adaptation": "Removed discovery frontmatter; principle body unchanged."
+      "upstream_sha256": "8df3c8c3fe57eb0055a5c8efab8ab144557fdf301da70b1cdc77a3a3ef3f3052",
+      "adaptation": "Distinguish legitimate-state handling from hiding an invalid producer; preserve evidence and task scope; diagnostic signals are proportional proposals.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/principles/foundational-thinking.md",
@@ -67,8 +71,10 @@
     {
       "local": "skills/kw-mode/principles/make-operations-idempotent.md",
       "upstream": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
-      "upstream_sha256": "540738217c3da7bf513b9886924ad6a2bc77e58be867f5bd2e1831c74bf2ce70",
-      "adaptation": "Removed discovery frontmatter; principle body unchanged."
+      "upstream_sha256": "7aa9327cf1f1aa057e95d47a0a78bd88a8f9d556b608866fee939d455a53a019",
+      "adaptation": "State reconciliation and crash recovery; local ownership, PID reuse and concurrent-writer cautions retained explicitly.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/principles/migrate-callers-then-delete-legacy-apis.md",
@@ -133,14 +139,24 @@
     {
       "local": "skills/kw-mode/principles/test-behavior-not-implementation.md",
       "upstream": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
-      "upstream_sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
-      "adaptation": "Removed discovery frontmatter; principle body unchanged."
+      "upstream_sha256": "f7223698623b6a26fea49c751e466b38e6691b1f32ce841d3983e7ffbe2b74a6",
+      "adaptation": "Use contract-breaking versus internal-refactoring tests; permit meaningful absence, external mock effects, and error-text contracts.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/principles/type-system-discipline.md",
       "upstream": "pstack/skills/principle-type-system-discipline/SKILL.md",
       "upstream_sha256": "c83da8031ffb4c86410030d3e261f659598fca2b7d8158fd9dc269d70a3a025e",
-      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule."
+      "adaptation": "Removed discovery frontmatter; converted principle citations to local reference links without changing the rule.",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/typescript-best-practices/references/patterns.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "faa1362055374452efccac1b629677c61acfb0bcc6c4e3311836b5715638ee18",
+          "adaptation": "Use the schema owning the shape; compiler-check completeness for a type-first validator, without requiring a specific library."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/playbooks/authoring-a-skill.md",
@@ -157,20 +173,32 @@
     {
       "local": "skills/kw-mode/playbooks/autopilot-full.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
-      "upstream_sha256": "52f69170bd7fa6b436992d90d3ef7fba893201e0b497297b416e9aea0e567d5f",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "upstream_sha256": "acf4f4a58c11045f9d3e8807d907a877e61ca6432b079f1087d7d30fc931566f",
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies. Preserve native ownership and explicit merge scope; record tested revisions, rerun invalidated checks, and stop a writer before replacement.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/playbooks/autopilot-stack.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
-      "upstream_sha256": "66364cd3a2286cbecfb73d3a7bf7d1fa387ede8525d37ef22b69d4ac03c2c5b2",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "upstream_sha256": "c6bcb18b2ce605e77a2a2225854590a4b9a687911f79331746d91a4fe9a52e60",
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies. Retain local stack flow and separate landing scope; single topology owner and coordination during landing.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/playbooks/babysit.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/babysit.md",
       "upstream_sha256": "51be21872152f97612d37258273269b88212b6696432d25d678cac30f02f4157",
-      "adaptation": "Uses the current forge and native waiting; distinguishes check, drive, and threads-only scope; allows one fresh CI run for suspected flakes before investigating repeated failures."
+      "adaptation": "Uses the current forge and native waiting; distinguishes check, drive, and threads-only scope; allows one fresh CI run for suspected flakes before investigating repeated failures.",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+          "adaptation": "Adapt full review-thread pagination and explicit human approval gate semantics to native tools; no watcher code imported."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/playbooks/bug-fix.md",
@@ -182,7 +210,15 @@
       "local": "skills/kw-mode/playbooks/eval.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/eval.md",
       "upstream_sha256": "b862bfa2fae2399abf047a8e80d3e3dddb64003af96fb1cebb625216131e36bb",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies.",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/principle-explain-the-number/SKILL.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "cd5a25f9e7cf023627ccb470dc5faa97542f29b4319496a32b839a8e1e988047",
+          "adaptation": "Route score conclusions through measurement evidence and trial variation; preserve local evaluator isolation and model inheritance."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/playbooks/feature.md",
@@ -193,8 +229,10 @@
     {
       "local": "skills/kw-mode/playbooks/hillclimb.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
-      "upstream_sha256": "bc1fc4052c1ee918a56115a219cbcbbc4c147fa1a8080e77c7d58068eecac299",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "upstream_sha256": "942c1565b75ad02a2cb6230dd7c1ebd87e19f59a00319ebac2b6616007bf018f",
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies. Keep local budget/target controls; validate evaluator sensitivity and count failures/completed work before freezing; link local benchmark checks.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/playbooks/investigation.md",
@@ -229,8 +267,10 @@
     {
       "local": "skills/kw-mode/playbooks/perf-issue.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
-      "upstream_sha256": "b2ee9aed1466583361cb61b4e8d79ebb3b61f7f9f6540be7633852afacab1d89",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "upstream_sha256": "c12aa2f82de7651a11676a3d5fea168f539b7f0faaa3a501d279255dd2a469c8",
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies. Keep empirical local perf flow and inherited models; vet baseline and subsequent claims through local benchmark checks.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/playbooks/prototype.md",
@@ -277,14 +317,26 @@
     {
       "local": "skills/kw-mode/playbooks/worktree-cleanup.md",
       "upstream": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
-      "upstream_sha256": "fc464dc4121926df1704f483c5feca83717c0a40b4651d3e11bd3aedd89441b6",
-      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies."
+      "upstream_sha256": "be04ae0afe19d4a4da5bcc4e94455f68dbebd1cda6eb0f456ca0d358ecf76c00",
+      "adaptation": "Rewritten for native Claude/Codex tools, conditional delivery, and no project-specific dependencies. Resolve actual merge target and evidence freshness; retain ownership, dirty/untracked preservation and no forced cleanup.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/workflows/architect.md",
       "upstream": "pstack/skills/architect/SKILL.md",
-      "upstream_sha256": "897a59beaa3cab107d98c256206e062cc4a5e9421a45b9d462fbded19291fea5",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Uses the local review workflow to pressure-test consequential choices and keeps design discussions interactive without requiring a named mode."
+      "upstream_sha256": "31f8e97a52bfa5432edd61f68ade2a8632ef0bacbc2d2a6802d7a0e6821944ac",
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Uses the local review workflow to pressure-test consequential choices and keeps design discussions interactive without requiring a named mode. Keep local caller-first design and authorization; add single state ownership, enforced boundaries and derived registries for partial-context contributors.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/architect/references/design-red-flags.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce",
+          "adaptation": "State ownership, enforced boundaries and shared registry derivation; retain public compatibility."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/workflows/arena.md",
@@ -320,7 +372,21 @@
       "local": "skills/kw-mode/workflows/reflect.md",
       "upstream": "pstack/skills/reflect/SKILL.md",
       "upstream_sha256": "6a4d4ccaace9ce88c3e268fcbedf3cfd40e527162a5e5aad6de8edbaf5e2b83f",
-      "adaptation": "Uses scoped session evidence, separates observed preferences from inferences, edits within the request, and resolves maintenance tools from the hub root."
+      "adaptation": "Uses scoped session evidence, separates observed preferences from inferences, edits within the request, and resolves maintenance tools from the hub root.",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/correct/SKILL.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "e347045d00c967a0b831ef883cc6ac79d21329aa10b5968637df95de7febf0ba",
+          "adaptation": "Structural prevention and evidence from an actual past mistake; no automatic unrelated remediation or external posting."
+        },
+        {
+          "upstream": "pstack/skills/reflect/references/synthesizer.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "6af816963de74d1a1aef4070273c1ff533d2072732e488e159ddc0b299fec3cd",
+          "adaptation": "Read target and fix weak routing or placement instead of duplicating a rule; retain local scope."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/workflows/review.md",
@@ -331,14 +397,18 @@
     {
       "local": "skills/kw-mode/workflows/show-me-your-work.md",
       "upstream": "pstack/skills/show-me-your-work/SKILL.md",
-      "upstream_sha256": "831e85ba3f84f38bf338cd03e6af050fea357752e25a825e334c99f59d7f2077",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "upstream_sha256": "920a8217cbb62f92a2222fb81fc9eab17ecd554a0277e444a95a927195139bd1",
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Keep local log schema and scoped commit policy; append-only corrections and run attribution; separate concurrent writers.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/workflows/swarm.md",
       "upstream": "pstack/skills/swarm/SKILL.md",
-      "upstream_sha256": "d578d877c3b8b9de7163f52579c4683337a940acc0fbe4496a498f5d3b27df30",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "upstream_sha256": "031657cb81e490f9aed5c75d6ff2a4fda35ccafbaf72be604e59481cc4080cdc",
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Native bounded delegation with lead ownership; pin verification revisions and measurement methods; missing evidence is a gap, not a pass.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/workflows/tdd.md",
@@ -355,8 +425,10 @@
     {
       "local": "skills/kw-mode/workflows/verify.md",
       "upstream": "pstack/skills/create-verification-skill/SKILL.md",
-      "upstream_sha256": "644f2551403c1bca01a2855b34611b6e7be0ce0dc5b204514c376c0f6a6e6ac4",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "upstream_sha256": "d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694",
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names. Condensed native verification; usable fresh-instance readiness, required journey data, and explicit stand-in gaps, without installing Cursor skills or modifying production data.",
+      "origin": "upstream",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68"
     },
     {
       "local": "skills/kw-mode/workflows/why.md",
@@ -368,7 +440,21 @@
       "local": "skills/kw-mode/workflows/writing.md",
       "upstream": "pstack/skills/unslop/SKILL.md",
       "upstream_sha256": "c6d2572294d933a428211921069e9a248490e9b466ca59437cb4d9de248600ca",
-      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names."
+      "adaptation": "Condensed local workflow; no mandatory third-party tools or model names.",
+      "additional_sources": [
+        {
+          "upstream": "pstack/skills/ketchup/SKILL.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "47b3fb0d5626a40fcb3bd016e68f1cb3d2d313351183e8f6c05d4c7abd76e665",
+          "adaptation": "Concise evidence-based catch-up, optional existing visuals and work continuity; no new command, forced format, or synthetic screenshots."
+        },
+        {
+          "upstream": "pstack/skills/poteto-mode/SKILL.md",
+          "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+          "upstream_sha256": "c5e6b605f46e5d9fbab31afa7a99d3d50680f2180d1fdfae3a924901bc52d99a",
+          "adaptation": "Close the September uncertainty recommendation: distinguish observation, inference and guesses near consequential claims, without mechanical labels."
+        }
+      ]
     },
     {
       "local": "skills/kw-mode/playbooks/upstream-review.md",
@@ -381,6 +467,22 @@
     {
       "local": "skills/kw-mode/workflows/review-handoff.md",
       "origin": "local"
+    },
+    {
+      "local": "skills/kw-mode/principles/explain-the-number.md",
+      "origin": "upstream",
+      "upstream": "pstack/skills/principle-explain-the-number/SKILL.md",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+      "upstream_sha256": "cd5a25f9e7cf023627ccb470dc5faa97542f29b4319496a32b839a8e1e988047",
+      "adaptation": "Condensed platform-neutral measurement principle with local benchmark/eval routing; unknown limiter stays uncertainty rather than forbidding honest reporting."
+    },
+    {
+      "local": "skills/kw-mode/workflows/benchmark.md",
+      "origin": "upstream",
+      "upstream": "pstack/skills/benchmark-checklist/SKILL.md",
+      "upstream_commit": "f713f14203cd6420cec13cd7c55c32d598dbab68",
+      "upstream_sha256": "ba109e96c8f6c1c391baccf19e5d11e14370df7b3f2605e1572cd565a6c0fca0",
+      "adaptation": "Condensed portable benchmark checks; proportionate repetitions, fair tuning, actual completed work, error counts and causal uncertainty; no mandatory Linux tools or statistical test."
     }
   ],
   "architecture_reference": "https://github.com/daryl-tg/deez-skills",

@@ -2,6 +2,7 @@
 
 1. Define the metric, workload, environment, and reproducible baseline. Capture a
    profile on the actual slow surface before choosing an optimization.
+   Vet the baseline and later comparisons with [benchmark checks](../workflows/benchmark.md).
 2. Ground the trace with [how](../workflows/how.md). Distinguish required work from
    removable work. Consider elimination, partitioning, caching, batching, lazy
    evaluation, or scheduling only when the trace supports that mechanism.

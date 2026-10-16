@@ -8,6 +8,10 @@
    [opening a PR](opening-a-pr.md). Keep failed or blocked items visible in the queue.
 4. Independently inspect the actual diff and verification at each current head.
    Resolve integration or shared-resource conflicts before advancing.
+   Record tested base/head revisions and durable evidence. Rerun checks invalidated
+   by later edits; reuse unaffected evidence only when its applicability is clear.
+   Judge progress from artifacts and live state. Stop an old writer before handing
+   its branch to a replacement.
 5. Land only authorized, verified items via [shipping](shipping.md), confirming each
    outcome. Otherwise stop those items at the requested local or review-ready state.
 6. Account for every queue item with its evidence and final state. Do not mark the

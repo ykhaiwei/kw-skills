@@ -13,7 +13,8 @@ discipline while using the tools of the current runtime.
 1. Read [profile.md](profile.md) and [runtime.md](runtime.md). Read repository
    instructions and inspect the working state before changing files.
    At the first substantive task in a session, follow
-   [weekly upkeep](workflows/weekly-upkeep.md) for the lightweight due check.
+   [weekly upkeep](workflows/weekly-upkeep.md) for the due check and automatic
+   review and local adoption when updates are pending.
 2. Read the [principles index](principles/index.md). Open the leaves relevant to
    the actual decisions; an index entry is not a substitute for the full rule.
 3. Match the request below, read that playbook, and use its numbered steps as
@@ -108,6 +109,7 @@ These are local references, not separately installed slash commands. For example
 | Check effects beyond the diff | [Blast radius](workflows/blast-radius.md) |
 | Establish a useful failing regression test | [TDD](workflows/tdd.md) |
 | Prove behavior and preserve the evidence | [Verify](workflows/verify.md) |
+| Vet a performance measurement or comparison | [Benchmark checks](workflows/benchmark.md) |
 | Rebuild recent context | [Recall](workflows/recall.md) |
 | Explain code plainly | [Teach](workflows/teach.md) |
 | Improve this mode from actual experience | [Reflect](workflows/reflect.md) |

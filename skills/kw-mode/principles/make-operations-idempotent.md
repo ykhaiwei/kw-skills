@@ -1,18 +1,15 @@
 # Make Operations Idempotent
 
-Design operations so they converge to the correct state regardless of how many times they run or where they start from. Every state-mutating operation should answer: "What happens if this runs twice? What happens if the previous run crashed halfway?"
+Design repeatable operations to converge on the intended state after retries and partial failures. Derive each step from what exists now, compare it with the goal, and apply the remaining difference.
 
-**Why:** Commands, lifecycle operations, and processing loops run where crashes, restarts, and retries are normal. If partial state changes the next run's outcome, every restart becomes a debugging session.
+Anything a run leaves behind, such as a lock, temporary file, partial record, or claimed job, needs enough evidence for a later run to distinguish live work from abandoned state. A PID alone may be reused or refer to another host; use ownership and liveness evidence appropriate to the system. Do not discard state whose ownership is unresolved.
 
-**The pattern:**
-- Convergent startup: scan for existing state, clean stale artifacts, adopt live sessions
-- Content-based cleanup: compare by content equivalence, not creation order
-- Self-healing locks: use PID-based stale lock detection
-- Idempotent scheduling: failed work respawns cleanly, fresh input regenerated after each cycle
+Use atomic replacement where appropriate, recognize already-completed work by stable identity or content, and reconcile partial results. Idempotence does not itself prevent concurrent writers: use the ownership or synchronization required by the actual shared resource.
 
-**The test:**
-1. What happens if this runs twice in a row?
-2. What happens if the previous run crashed at every possible point?
-3. Does re-execution converge to the same end state?
+Check three cases:
 
-If any answer is "it depends on what state was left behind," the operation needs a reconciliation step.
+1. The operation runs twice in a row.
+2. A prior run stops at each meaningful mutation boundary.
+3. Re-execution converges without duplicating effects or damaging live work.
+
+If a retry depends on an uncheckable assumption about the previous run, improve the state representation or reconciliation step.

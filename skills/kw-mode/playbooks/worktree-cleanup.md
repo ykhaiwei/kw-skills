@@ -2,6 +2,9 @@
 
 1. Inventory candidates and their size, repository, branch, dirty state, upstream
    relationship, unmerged commits, and active task/process ownership.
+   Resolve the actual merge target from repository and PR metadata or an explicit
+   target; do not assume `main`. Refresh remote state when possible and report
+   stale or unavailable evidence before classifying merged work.
 2. Establish which resources are actually disposable within the cleanup request.
    Preserve dirty, untracked, unmerged, active, or uncertain work. A branch name or
    age alone does not prove a worktree is abandoned.

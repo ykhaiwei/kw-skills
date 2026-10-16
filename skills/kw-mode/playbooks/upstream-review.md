@@ -7,9 +7,10 @@ and diff when available; an explicit check-now request first forces a fresh scan
 
 1. Resolve the hub root through [runtime](../runtime.md). Read its `upstream.json`,
    `docs/upstream-reviews.md`, and the local [profile](../profile.md). Keep the
-   imported source baseline separate from the latest completed review. A check
-   reports recommendations and updates the review log; importing changes requires
-   an update request. An explicit read-only request leaves even the log unchanged.
+   imported source baseline separate from the latest completed review. The profile
+   gives standing authorization to review and apply worthwhile local adaptations.
+   Honor a task-specific check-only or review-only request instead; an explicit
+   read-only request leaves even the log unchanged.
 2. Reuse the checker's pinned snapshot report and full diff when available. Fetch
    the recorded repository into a task-owned temporary checkout if additional
    source context is needed, or if checking manually without that report. Inspect
@@ -35,12 +36,15 @@ and diff when available; an explicit check-now request first forces a fresh scan
 5. Write the outcome to the hub's `docs/upstream-reviews.md`: UTC review date,
    compared commits, version observed, scope covered, decisions, and unresolved
    candidates. Advance its completed checkpoint only after every changed item
-   has a disposition. Keep deferred items visible at future checks. For a partial
-   review, record coverage without advancing the checkpoint. A completed check
+   has a disposition. Keep a current pending-work summary with each deferred
+   review or adoption's remaining scope and reason; a completed review checkpoint
+   does not mean its adaptations are applied. Update this summary after adoption
+   and verification. For a partial review, record coverage without advancing the
+   checkpoint. A completed check
    with identical trees can advance it and report no new changes. Set the next
    suggested check seven days later; an explicit check-now request still fetches
    fresh evidence sooner. Finish with the few recommendations worth discussing.
-6. When the request includes adoption, implement the selected changes through
+6. When adoption is covered by the request or standing profile, implement selected changes through
    [authoring a skill](authoring-a-skill.md). Verify and record their disposition.
    Update affected provenance entries with the actual source commit, SHA-256 of
    the original source bytes, and adaptation notes. A selective import uses an

@@ -284,15 +284,24 @@ def doctor(root, home=None, installed=False, selected=None, quiet=False, default
         recorded.add(local)
         origin = entry.get("origin", "upstream")
         if origin == "upstream":
-            commit = entry.get("upstream_commit", provenance.get("commit", ""))
-            if not isinstance(commit, str) or not re.fullmatch(r"[a-f0-9]{40}", commit):
-                errors.append(f"Unpinned source commit: {entry['local']}")
-            if not entry.get("upstream"):
-                errors.append(f"Missing upstream path: {entry['local']}")
-            if not re.fullmatch(r"[a-f0-9]{64}", entry.get("upstream_sha256", "")):
-                errors.append(f"Missing source hash: {entry['local']}")
+            additional = entry.get("additional_sources", [])
+            if not isinstance(additional, list):
+                errors.append(f"Invalid additional sources: {entry['local']}")
+                additional = []
+            for index, source in enumerate([entry, *additional]):
+                if not isinstance(source, dict):
+                    errors.append(f"Invalid source record: {entry['local']}")
+                    continue
+                commit = source.get("upstream_commit", provenance.get("commit", "") if index == 0 else "")
+                if not isinstance(commit, str) or not re.fullmatch(r"[a-f0-9]{40}", commit):
+                    errors.append(f"Unpinned source commit: {entry['local']}")
+                if not isinstance(source.get("upstream"), str) or not source["upstream"].strip():
+                    errors.append(f"Missing upstream path: {entry['local']}")
+                digest = source.get("upstream_sha256", "")
+                if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
+                    errors.append(f"Missing source hash: {entry['local']}")
         elif origin == "local":
-            if "upstream" in entry or "upstream_sha256" in entry:
+            if any(key in entry for key in ("upstream", "upstream_sha256", "additional_sources")):
                 errors.append(f"Local entry has upstream fields: {entry['local']}")
         else:
             errors.append(f"Unknown origin {origin!r}: {entry['local']}")
